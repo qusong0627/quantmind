@@ -83,8 +83,6 @@ services:
       - REDIS_URL=redis://:quantmind123@redis:6379
       - INFLUXDB_URL=http://influxdb:8086
     depends_on:
-      python-base:
-        condition: service_completed_successfully
       mysql:
         condition: service_healthy
       redis:
@@ -117,8 +115,6 @@ services:
       - QWEN_API_KEY=${QWEN_API_KEY:-}
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
     depends_on:
-      python-base:
-        condition: service_completed_successfully
       mysql:
         condition: service_healthy
       redis:

@@ -156,22 +156,73 @@ check_docker_service() {
     
     # 检查Docker是否运行
     if ! docker info &> /dev/null; then
-        log_error "Docker服务未运行，请启动Docker服务"
-        if [[ "$OS" == "macos" ]]; then
-            log_info "macOS用户请启动Docker Desktop应用程序"
+        log_warning "Docker服务未运行，尝试自动启动..."
+        if [[ "$OS" == "linux" ]]; then
+            # 尝试启动Docker服务
+            if command -v systemctl &> /dev/null; then
+                if sudo systemctl start docker 2>/dev/null; then
+                    log_success "Docker服务已启动"
+                else
+                    log_error "无法启动Docker服务，请手动启动"
+                    log_info "Linux用户请运行: sudo systemctl start docker"
+                    log_info "或者联系系统管理员"
+                    exit 1
+                fi
+            else
+                log_error "未找到systemctl命令，无法自动启动Docker服务"
+                log_info "请手动启动Docker服务或联系系统管理员"
+                exit 1
+            fi
+        elif [[ "$OS" == "macos" ]]; then
+            log_error "Docker服务未运行，请启动Docker Desktop应用程序"
+            exit 1
         else
-            log_info "Linux用户请运行: sudo systemctl start docker"
+            log_error "不支持的操作系统，无法自动启动Docker服务"
+            exit 1
         fi
-        exit 1
     fi
     
     # 检查Docker权限
     if ! docker ps &> /dev/null; then
-        log_error "当前用户无法访问Docker"
+        log_warning "当前用户无法访问Docker，尝试修复权限..."
         if [[ "$OS" == "linux" ]]; then
-            log_info "请确保用户在docker组中: sudo usermod -aG docker $USER && newgrp docker"
+            # 检查用户是否在docker组中
+            if groups $USER | grep -q docker; then
+                log_info "用户已在docker组中，但权限未生效，请重新登录或运行newgrp docker"
+                log_info "您也可以临时使用sudo运行Docker命令"
+                read -p "是否尝试使用sudo运行Docker命令? (y/N): " -n 1 -r
+                echo
+                if [[ $REPLY =~ ^[Yy]$ ]]; then
+                    # 创建一个临时函数来使用sudo运行docker
+                    docker() {
+                        sudo docker "$@"
+                    }
+                    log_info "已设置使用sudo运行Docker命令"
+                else
+                    log_error "请重新登录或运行 'newgrp docker' 以使docker组权限生效"
+                    exit 1
+                fi
+            else
+                log_info "将用户添加到docker组..."
+                if sudo usermod -aG docker $USER 2>/dev/null; then
+                    log_success "用户已添加到docker组"
+                    log_warning "请重新登录或运行 'newgrp docker' 以使权限生效"
+                    log_info "现在将尝试使用sudo运行Docker命令"
+                    
+                    # 创建一个临时函数来使用sudo运行docker
+                    docker() {
+                        sudo docker "$@"
+                    }
+                else
+                    log_error "无法将用户添加到docker组，请手动添加或使用sudo"
+                    log_info "手动添加命令: sudo usermod -aG docker $USER"
+                    exit 1
+                fi
+            fi
+        else
+            log_error "当前用户无法访问Docker"
+            exit 1
         fi
-        exit 1
     fi
     
     log_success "Docker服务正常"
