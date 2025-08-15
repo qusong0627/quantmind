@@ -1,0 +1,492 @@
+{
+  "_metadata": {
+    "name": "QuantMind 数据库统一配置",
+    "version": "1.0.0",
+    "description": "集中管理所有数据库连接配置",
+    "last_updated": "2025-01-15",
+    "author": "QuantMind Team"
+  },
+
+  "_instructions": {
+    "setup": [
+      "1. 复制此文件为 database_config.local.json",
+      "2. 在本地文件中填入真实的数据库连接信息",
+      "3. 或者通过环境变量设置数据库连接（优先级更高）",
+      "4. 确保 database_config.local.json 已添加到 .gitignore"
+    ],
+    "priority": "数据库按priority字段排序，数字越小优先级越高",
+    "fallback": "当主数据库失败时，系统会自动切换到备用数据库",
+    "environment_variables": "环境变量名在env_vars字段中定义，优先级高于配置文件"
+  },
+
+  "databases": {
+    "mysql_primary": {
+      "name": "MySQL主数据库",
+      "description": "主要的关系型数据库，存储用户数据、交易记录、系统配置",
+      "type": "mysql",
+      "role": "primary",
+      "priority": 1,
+      "status": "active",
+      "required": true,
+
+      "connection": {
+        "host": "localhost",
+        "port": 3306,
+        "database": "quantmind",
+        "username": "quantmind_user",
+        "password": "your_mysql_password_here",
+        "charset": "utf8mb4",
+        "collation": "utf8mb4_unicode_ci",
+        "timezone": "+08:00",
+        "ssl_mode": "PREFERRED",
+        "connect_timeout": 30,
+        "read_timeout": 30,
+        "write_timeout": 30
+      },
+
+      "pool_config": {
+        "pool_size": 10,
+        "max_overflow": 20,
+        "pool_timeout": 30,
+        "pool_recycle": 3600,
+        "pool_pre_ping": true,
+        "echo": false
+      },
+
+      "env_vars": {
+        "host": "MYSQL_HOST",
+        "port": "MYSQL_PORT",
+        "database": "MYSQL_DATABASE",
+        "username": "MYSQL_USERNAME",
+        "password": "MYSQL_PASSWORD",
+        "ssl_mode": "MYSQL_SSL_MODE"
+      },
+
+      "features": {
+        "transactions": true,
+        "foreign_keys": true,
+        "full_text_search": true,
+        "json_support": true,
+        "partitioning": true,
+        "replication": false
+      },
+
+      "backup": {
+        "enabled": true,
+        "schedule": "0 2 * * *",
+        "retention_days": 30,
+        "backup_path": "backups/mysql"
+      }
+    },
+
+    "mysql_replica": {
+      "name": "MySQL读副本",
+      "description": "MySQL读副本，用于读取操作负载均衡",
+      "type": "mysql",
+      "role": "replica",
+      "priority": 2,
+      "status": "optional",
+      "required": false,
+
+      "connection": {
+        "host": "localhost",
+        "port": 3307,
+        "database": "quantmind",
+        "username": "quantmind_readonly",
+        "password": "your_mysql_readonly_password_here",
+        "charset": "utf8mb4",
+        "collation": "utf8mb4_unicode_ci",
+        "timezone": "+08:00",
+        "ssl_mode": "PREFERRED",
+        "connect_timeout": 30,
+        "read_timeout": 30,
+        "write_timeout": 30
+      },
+
+      "pool_config": {
+        "pool_size": 5,
+        "max_overflow": 10,
+        "pool_timeout": 30,
+        "pool_recycle": 3600,
+        "pool_pre_ping": true,
+        "echo": false
+      },
+
+      "env_vars": {
+        "host": "MYSQL_REPLICA_HOST",
+        "port": "MYSQL_REPLICA_PORT",
+        "database": "MYSQL_REPLICA_DATABASE",
+        "username": "MYSQL_REPLICA_USERNAME",
+        "password": "MYSQL_REPLICA_PASSWORD"
+      },
+
+      "features": {
+        "read_only": true,
+        "lag_tolerance": 5
+      }
+    },
+
+    "redis_primary": {
+      "name": "Redis主缓存",
+      "description": "主要的内存缓存数据库，存储热点数据、会话信息",
+      "type": "redis",
+      "role": "primary",
+      "priority": 1,
+      "status": "active",
+      "required": true,
+
+      "connection": {
+        "host": "localhost",
+        "port": 6379,
+        "database": 0,
+        "password": "your_redis_password_here",
+        "username": null,
+        "ssl": false,
+        "ssl_cert_reqs": "required",
+        "connect_timeout": 5,
+        "socket_timeout": 5,
+        "socket_keepalive": true,
+        "socket_keepalive_options": {},
+        "decode_responses": true,
+        "encoding": "utf-8"
+      },
+
+      "pool_config": {
+        "max_connections": 50,
+        "retry_on_timeout": true,
+        "health_check_interval": 30
+      },
+
+      "env_vars": {
+        "host": "REDIS_HOST",
+        "port": "REDIS_PORT",
+        "database": "REDIS_DATABASE",
+        "password": "REDIS_PASSWORD",
+        "username": "REDIS_USERNAME",
+        "ssl": "REDIS_SSL"
+      },
+
+      "features": {
+        "persistence": "rdb",
+        "clustering": false,
+        "sentinel": false,
+        "pub_sub": true,
+        "streams": true,
+        "modules": []
+      },
+
+      "cache_config": {
+        "default_ttl": 3600,
+        "max_memory": "2gb",
+        "eviction_policy": "allkeys-lru",
+        "key_prefix": "quantmind:"
+      }
+    },
+
+    "redis_session": {
+      "name": "Redis会话存储",
+      "description": "专用于用户会话存储的Redis实例",
+      "type": "redis",
+      "role": "session",
+      "priority": 2,
+      "status": "optional",
+      "required": false,
+
+      "connection": {
+        "host": "localhost",
+        "port": 6380,
+        "database": 1,
+        "password": "your_redis_session_password_here",
+        "username": null,
+        "ssl": false,
+        "connect_timeout": 5,
+        "socket_timeout": 5,
+        "decode_responses": true,
+        "encoding": "utf-8"
+      },
+
+      "env_vars": {
+        "host": "REDIS_SESSION_HOST",
+        "port": "REDIS_SESSION_PORT",
+        "password": "REDIS_SESSION_PASSWORD"
+      },
+
+      "cache_config": {
+        "default_ttl": 86400,
+        "key_prefix": "session:"
+      }
+    },
+
+    "influxdb_primary": {
+      "name": "InfluxDB时序数据库",
+      "description": "时序数据库，存储股票历史数据、监控指标",
+      "type": "influxdb",
+      "role": "primary",
+      "priority": 1,
+      "status": "active",
+      "required": false,
+
+      "connection": {
+        "url": "http://localhost:8086",
+        "token": "your_influxdb_token_here",
+        "org": "quantmind",
+        "bucket": "market_data",
+        "timeout": 30000,
+        "verify_ssl": true,
+        "ssl_ca_cert": null,
+        "debug": false
+      },
+
+      "env_vars": {
+        "url": "INFLUXDB_URL",
+        "token": "INFLUXDB_TOKEN",
+        "org": "INFLUXDB_ORG",
+        "bucket": "INFLUXDB_BUCKET"
+      },
+
+      "features": {
+        "version": "2.x",
+        "flux_queries": true,
+        "continuous_queries": true,
+        "retention_policies": true,
+        "downsampling": true
+      },
+
+      "buckets": {
+        "market_data": {
+          "description": "股票市场数据",
+          "retention_period": "30d"
+        },
+        "monitoring": {
+          "description": "系统监控数据",
+          "retention_period": "7d"
+        },
+        "analytics": {
+          "description": "分析数据",
+          "retention_period": "90d"
+        }
+      }
+    },
+
+    "sqlite_local": {
+      "name": "SQLite本地数据库",
+      "description": "轻量级本地数据库，用于开发测试和离线数据",
+      "type": "sqlite",
+      "role": "local",
+      "priority": 3,
+      "status": "active",
+      "required": false,
+
+      "connection": {
+        "path": "data/quantmind.db",
+        "timeout": 30,
+        "check_same_thread": false,
+        "isolation_level": null,
+        "detect_types": 0,
+        "cached_statements": 100
+      },
+
+      "env_vars": {
+        "path": "SQLITE_PATH"
+      },
+
+      "features": {
+        "wal_mode": true,
+        "foreign_keys": true,
+        "recursive_triggers": true,
+        "full_text_search": true
+      },
+
+      "pragmas": {
+        "journal_mode": "WAL",
+        "synchronous": "NORMAL",
+        "cache_size": 10000,
+        "foreign_keys": "ON",
+        "temp_store": "MEMORY"
+      }
+    },
+
+    "postgresql_backup": {
+      "name": "PostgreSQL备份数据库",
+      "description": "PostgreSQL数据库，用作备份和数据仓库",
+      "type": "postgresql",
+      "role": "backup",
+      "priority": 4,
+      "status": "optional",
+      "required": false,
+
+      "connection": {
+        "host": "localhost",
+        "port": 5432,
+        "database": "quantmind_backup",
+        "username": "quantmind_backup",
+        "password": "your_postgresql_password_here",
+        "sslmode": "prefer",
+        "connect_timeout": 30,
+        "application_name": "quantmind"
+      },
+
+      "pool_config": {
+        "pool_size": 5,
+        "max_overflow": 10,
+        "pool_timeout": 30,
+        "pool_recycle": 3600,
+        "pool_pre_ping": true
+      },
+
+      "env_vars": {
+        "host": "POSTGRESQL_HOST",
+        "port": "POSTGRESQL_PORT",
+        "database": "POSTGRESQL_DATABASE",
+        "username": "POSTGRESQL_USERNAME",
+        "password": "POSTGRESQL_PASSWORD"
+      },
+
+      "features": {
+        "json_support": true,
+        "full_text_search": true,
+        "partitioning": true,
+        "materialized_views": true
+      }
+    }
+  },
+
+  "connection_strategies": {
+    "read_write_split": {
+      "enabled": true,
+      "write_db": "mysql_primary",
+      "read_dbs": ["mysql_replica", "mysql_primary"],
+      "read_weight": {
+        "mysql_replica": 70,
+        "mysql_primary": 30
+      }
+    },
+
+    "failover": {
+      "enabled": true,
+      "primary": "mysql_primary",
+      "fallback": ["mysql_replica", "sqlite_local"],
+      "health_check_interval": 30,
+      "max_retry_attempts": 3,
+      "retry_delay": 5
+    },
+
+    "load_balancing": {
+      "enabled": false,
+      "algorithm": "round_robin",
+      "databases": ["mysql_primary", "mysql_replica"]
+    }
+  },
+
+  "monitoring": {
+    "enabled": true,
+    "metrics": {
+      "connection_pool": true,
+      "query_performance": true,
+      "error_rates": true,
+      "connection_count": true
+    },
+    "alerts": {
+      "connection_failure": true,
+      "slow_queries": true,
+      "high_cpu": true,
+      "low_disk_space": true
+    },
+    "thresholds": {
+      "slow_query_time": 1.0,
+      "connection_pool_usage": 0.8,
+      "error_rate": 0.05
+    }
+  },
+
+  "security": {
+    "encryption": {
+      "at_rest": true,
+      "in_transit": true,
+      "key_rotation": true
+    },
+    "access_control": {
+      "role_based": true,
+      "ip_whitelist": [],
+      "audit_logging": true
+    },
+    "password_policy": {
+      "min_length": 12,
+      "require_special_chars": true,
+      "require_numbers": true,
+      "require_uppercase": true,
+      "expiry_days": 90
+    }
+  },
+
+  "backup_strategy": {
+    "enabled": true,
+    "schedule": {
+      "full_backup": "0 2 * * 0",
+      "incremental_backup": "0 2 * * 1-6"
+    },
+    "retention": {
+      "daily": 7,
+      "weekly": 4,
+      "monthly": 12,
+      "yearly": 3
+    },
+    "compression": true,
+    "encryption": true,
+    "remote_storage": {
+      "enabled": false,
+      "type": "s3",
+      "bucket": "quantmind-backups",
+      "region": "us-east-1"
+    }
+  },
+
+  "performance_tuning": {
+    "connection_pooling": {
+      "enabled": true,
+      "min_pool_size": 5,
+      "max_pool_size": 50,
+      "idle_timeout": 300,
+      "max_lifetime": 3600
+    },
+    "query_optimization": {
+      "enabled": true,
+      "slow_query_log": true,
+      "explain_analyze": true,
+      "index_suggestions": true
+    },
+    "caching": {
+      "query_cache": true,
+      "result_cache": true,
+      "metadata_cache": true,
+      "cache_ttl": 3600
+    }
+  },
+
+  "migration": {
+    "enabled": true,
+    "auto_migrate": false,
+    "migration_path": "migrations/",
+    "version_table": "schema_migrations",
+    "backup_before_migrate": true
+  },
+
+  "validation_rules": {
+    "required_for_production": [
+      "mysql_primary.connection.password",
+      "redis_primary.connection.password",
+      "influxdb_primary.connection.token"
+    ],
+    "recommended_for_production": [
+      "mysql_replica.connection.host",
+      "redis_session.connection.host",
+      "postgresql_backup.connection.host"
+    ],
+    "security_requirements": [
+      "All passwords must be changed from defaults",
+      "SSL/TLS must be enabled for production",
+      "Access control must be configured",
+      "Backup encryption must be enabled"
+    ]
+  }
+}

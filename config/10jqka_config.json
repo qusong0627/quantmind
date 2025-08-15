@@ -1,0 +1,23 @@
+{
+  "10jqka": {
+    "base_url": "https://ft.10jqka.com.cn/api/v1",
+    "auth": {
+      "access_token": "bffa6a1209f7c6bc2f044ca2ae9f63036d904b82.signs_Nzk3NzczODgz",
+      "refresh_token": "eyJzaWduX3RpbWUiOiIyMDI1LTA4LTA2IDEzOjE3OjMyIn0=.eyJ1aWQiOiI3OTc3NzM4ODMiLCJ1c2VyIjp7ImFjY291bnQiOiJ6aGFpc29uZzAwMSIsImF1dGhVc2VySW5mbyI6eyJhcGlGb3JtYWwiOiIxIn0sImNvZGVDU0kiOltdLCJjb2RlWnpBdXRoIjpbXSwiaGFzQUlQcmVkaWN0IjpmYWxzZSwiaGFzQUlUYWxrIjpmYWxzZSwiaGFzQ0lDQyI6ZmFsc2UsImhhc0NTSSI6ZmFsc2UsImhhc0V2ZW50RHJpdmUiOmZhbHNlLCJoYXNGVFNFIjpmYWxzZSwiaGFzRmFzdCI6ZmFsc2UsImhhc0Z1bmRWYWx1YXRpb24iOmZhbHNlLCJoYXNISyI6dHJ1ZSwiaGFzTE1FIjpmYWxzZSwiaGFzTGV2ZWwyIjpmYWxzZSwiaGFzUmVhbENNRSI6ZmFsc2UsImhhc1RyYW5zZmVyIjpmYWxzZSwiaGFzVVMiOmZhbHNlLCJoYXNVU0FJbmRleCI6ZmFsc2UsImhhc1VTREVCVCI6ZmFsc2UsIm1hcmtldEF1dGgiOnsiRENFIjpmYWxzZX0sIm1heE9uTGluZSI6MSwibm9EaXNrIjpmYWxzZSwicHJvZHVjdFR5cGUiOiJTVVBFUkNPTU1BTkRQUk9EVUNUIiwicmVmcmVzaFRva2VuIjoiIiwicmVmcmVzaFRva2VuRXhwaXJlZFRpbWUiOiIyMDI1LTA5LTA1IDExOjIwOjQ2Iiwic2Vzc3Npb24iOiI5MzUzM2Y0NzdmNGNjZDA3YmNkZTJmN2M0ZTE0NTk3NiIsInNpZEluZm8iOnsxOiIxMDEiLDI6IjEiLDM6IjEiLDU6IjEiLDEwMjoiMSIsNjoiMSIsNzoiMTExMTExMTExMTEiLDg6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxIiw0NDoiMTEiLDU0OiIwMDAwMDAwMDAwMTEwMDAwMDEwMTAwMDAwMTAwMTAwMDAwMCIsODk6IjAwMDAwMDAwMDAwMDAxMTExMTEwMDAwMCIsOTA6IjAwMDAwMDAwMDAwMDAwMDAwMTExMDAwMDAwIiw2MjoiMDAwMDAwMDAwMDAwMDAwMDAwMDEwMDAwIn0sInRpbWVzdGFtcCI6IjE3NTQ0NTc0NTIxOTUiLCJ0cmFuc0F1dGgiOmZhbHNlLCJ0dGxWYWx1ZSI6MCwidWlkIjoiNzk3NzczODgzIiwidXNlclR5cGUiOiJPRkZJQ0lBTCIsIndpZmluZExpbWl0TWFwIjp7fX19.78F0690743854BA54A644A6E4271D18DFB0C70999A2C1053357C78E169C36DA1"
+    },
+    "endpoints": {
+      "get_trade_dates": "/get_trade_dates",
+      "get_basic_data": "/get_basic_data",
+      "get_market_data": "/get_market_data",
+      "get_financial_data": "/get_financial_data",
+      "get_macro_data": "/get_macro_data"
+    },
+    "settings": {
+      "timeout": 30,
+      "retry_count": 3,
+      "rate_limit": {
+        "requests_per_minute": 100
+      }
+    }
+  }
+}

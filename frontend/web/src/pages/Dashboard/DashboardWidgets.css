@@ -1,0 +1,1491 @@
+/* 仪表盘容器样式 */
+.dashboard-widgets-container {
+  padding: 20px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 工具栏样式 */
+.dashboard-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.toolbar-left h3 {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+.toolbar-right .ant-space {
+  align-items: center;
+}
+
+/* 网格布局样式 */
+.dashboard-grid {
+  background: transparent;
+}
+
+/* 组件卡片样式 */
+.dashboard-widget {
+  height: 100%;
+}
+
+.widget-card {
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+
+.widget-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.widget-card.edit-mode {
+  border-color: #1890ff;
+  cursor: move;
+}
+
+.widget-card.edit-mode:hover {
+  border-color: #40a9ff;
+  box-shadow: 0 4px 20px rgba(24, 144, 255, 0.2);
+}
+
+/* 拖拽手柄样式 */
+.widget-drag-handle {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  color: #1890ff;
+  font-size: 16px;
+  cursor: move;
+  padding: 4px;
+  border-radius: 4px;
+  background: rgba(24, 144, 255, 0.1);
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.widget-drag-handle:hover {
+  opacity: 1;
+  background: rgba(24, 144, 255, 0.2);
+}
+
+/* 组件内容样式 */
+.widget-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.widget-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  margin: 0;
+}
+
+.widget-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.widget-body {
+  flex: 1;
+  overflow: visible;
+  min-height: 0;
+  padding: 4px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Quick Actions Widget specific styles - override centering */
+.widget-content:has(.quick-action-item) .widget-body {
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* Performance Widget - New Design */
+.performance-widget .widget-body {
+  padding: 8px;
+  height: 100%;
+}
+
+.performance-widget .ant-row {
+  height: 100%;
+  margin: 0 !important;
+}
+
+.performance-widget .ant-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.performance-card {
+  height: 100%;
+  margin: 0;
+}
+
+.performance-card .ant-card-body {
+  padding: 8px 6px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.performance-card .ant-statistic {
+  margin: 0;
+}
+
+.performance-card .ant-statistic-title {
+  font-size: 10px;
+  margin-bottom: 2px;
+  color: #666;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.performance-card .ant-statistic-content {
+  font-size: 12px;
+  line-height: 1.2;
+}
+
+.performance-card .ant-statistic-content-value {
+  font-weight: 600;
+}
+
+/* 设置弹窗样式 */
+.widget-category {
+  margin-bottom: 24px;
+}
+
+.widget-category h5 {
+  color: #1890ff;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.widget-config-card {
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.widget-config-card:hover {
+  border-color: #1890ff;
+  box-shadow: 0 2px 8px rgba(24, 144, 255, 0.1);
+}
+
+.widget-config-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.widget-info {
+  flex: 1;
+  margin-right: 12px;
+}
+
+.widget-name {
+  font-weight: 600;
+  color: #262626;
+  margin-bottom: 4px;
+}
+
+.widget-description {
+  font-size: 12px;
+  color: #8c8c8c;
+  line-height: 1.4;
+}
+
+.layout-settings {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.layout-settings p {
+  color: #8c8c8c;
+  margin-bottom: 20px;
+}
+
+/* 响应式样式 */
+@media (max-width: 768px) {
+  .dashboard-widgets-container {
+    padding: 10px;
+  }
+  
+  .dashboard-toolbar {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .toolbar-left,
+  .toolbar-right {
+    text-align: center;
+  }
+  
+  .widget-card {
+    border-radius: 8px;
+  }
+}
+
+/* 网格布局调整手柄样式 */
+.react-resizable-handle {
+  background: #1890ff;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.widget-card.edit-mode .react-resizable-handle {
+  opacity: 0.6;
+}
+
+.widget-card.edit-mode:hover .react-resizable-handle {
+  opacity: 1;
+}
+
+.react-resizable-handle-se {
+  bottom: 3px;
+  right: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: 0 0 6px 0;
+}
+
+/* 加载状态样式 */
+.widget-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #8c8c8c;
+}
+
+/* 空状态样式 */
+.widget-empty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #8c8c8c;
+  text-align: center;
+}
+
+.widget-empty-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+.widget-empty-text {
+  font-size: 14px;
+}
+
+/* 数据展示样式 */
+.widget-data-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.widget-data-item:last-child {
+  border-bottom: none;
+}
+
+.widget-data-label {
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+.widget-data-value {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.widget-data-value.positive {
+  color: #52c41a;
+}
+
+.widget-data-value.negative {
+  color: #ff4d4f;
+}
+
+.widget-data-value.neutral {
+  color: #262626;
+}
+
+/* 图表容器样式 */
+.widget-chart {
+  height: 200px;
+  width: 100%;
+}
+
+/* 列表样式 */
+.widget-list {
+  /* 移除固定高度和滚动条设置，让内容自然展示 */
+}
+
+.widget-list-item {
+  padding: 12px 0;
+  border-bottom: 1px solid #f5f5f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.widget-list-item:last-child {
+  border-bottom: none;
+}
+
+.widget-list-item:hover {
+  background: #fafafa;
+  margin: 0 -12px;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+/* 统计数字样式 */
+.widget-stat {
+  text-align: center;
+  padding: 16px 0;
+}
+
+.widget-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1890ff;
+  margin-bottom: 4px;
+}
+
+.widget-stat-label {
+  font-size: 12px;
+  color: #8c8c8c;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 进度条样式 */
+.widget-progress {
+  margin: 8px 0;
+}
+
+.widget-progress .ant-progress-text {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* 标签样式 */
+.widget-tag {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  background: #f0f0f0;
+  color: #8c8c8c;
+  display: inline-block;
+  margin: 2px;
+}
+
+.widget-tag.primary {
+  background: #e6f7ff;
+  color: #1890ff;
+}
+
+.widget-tag.success {
+  background: #f6ffed;
+  color: #52c41a;
+}
+
+.widget-tag.warning {
+  background: #fffbe6;
+  color: #faad14;
+}
+
+.widget-tag.danger {
+  background: #fff2f0;
+  color: #ff4d4f;
+}
+
+/* 自定义滚动条样式 */
+.widget-body ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.widget-body ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.widget-body ::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.widget-body ::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.widget-body ::-webkit-scrollbar-corner {
+  background: #f1f1f1;
+}
+
+/* 为 Ant Design List 组件添加滚动条样式 */
+.ant-list ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.ant-list ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.ant-list ::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.ant-list ::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 为 Ant Design Table 组件添加滚动条样式 */
+.ant-table-body ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.ant-table-body ::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.ant-table-body ::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.ant-table-body ::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Watchlist Widget - override centering and ensure full width */
+.widget-content:has(.watchlist-scroll) .widget-body {
+  align-items: stretch;       /* 覆盖全局 align-items:center */
+  justify-content: flex-start;
+}
+
+
+
+.watchlist-scroll .ant-list-items,
+.watchlist-scroll .ant-list-item {
+  width: 100%;                /* 列表子项占满宽度，防止内容宽度回缩 */
+}
+
+.widget-content:has(.ant-list) .widget-body,
+.widget-content:has(.ant-table-wrapper) .widget-body,
+.widget-content:has(.ant-row) .widget-body,
+.widget-content:has(.ant-tabs) .widget-body {
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* 确保列表与表格容器本身占满宽度，避免按内容宽度回缩 */
+.widget-content .ant-list,
+.widget-content .ant-list-items,
+.widget-content .ant-list-item {
+  width: 100%;
+}
+
+.widget-content .ant-table-wrapper {
+  width: 100%;
+}
+
+/* === 新增：居中网格通用工具类 + 市场概览专用覆盖 === */
+.widget-content.market-overview-widget .widget-body {
+  /* 放在全局覆盖之后，确保该组件上下左右都居中 */
+  align-items: center;
+  /* 原为 center，导致垂直居中产生上方空白，改为靠上 */
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0;            /* 确保顶部没有额外内边距 */
+  gap: 8px;                  /* 保持轻微间距，避免过于拥挤 */
+}
+
+/* 避免 widget-body 内第一个元素（网格容器）被其他样式带来的顶部外边距推开 */
+.widget-content.market-overview-widget .widget-body > *:first-child {
+  margin-top: 0 !important;
+}
+
+.market-grid-center {
+  width: 100%;
+  max-width: 720px;      /* 居中聚拢宽度 */
+  margin: 0 auto;
+}
+
+.market-grid-center .ant-row {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;  /* 避免负边距影响居中 */
+  box-sizing: border-box !important;
+  justify-content: center !important; /* 强制Row内容居中 */
+}
+
+.market-grid-center .market-index-item {
+  padding: 0 8px;        /* 轻量水平间距 */
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 12px 8px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+}
+
+.market-grid-center .market-index-item:hover {
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* 确保指数名称居中 */
+.market-index-item .index-name {
+  text-align: center !important;
+  font-weight: 500;
+  color: #595959 !important;
+  margin-bottom: 6px !important;
+}
+
+/* 确保指数价格居中 */
+.market-index-item .index-price {
+  text-align: center !important;
+  font-size: 18px !important;
+  font-weight: bold !important;
+  color: #262626;
+  margin-bottom: 6px !important;
+}
+
+/* 确保涨跌幅居中 */
+.market-index-item .index-change {
+  text-align: center !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* === Strategy Performance Widget - 简化版布局 === */
+.strategy-performance-widget .widget-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 8px 0;
+}
+
+.strategy-performance-widget .strategy-list {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.strategy-performance-widget .strategy-list .ant-list {
+  height: 100%;
+  overflow: hidden;
+}
+
+.strategy-performance-widget .strategy-list .ant-list-items {
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 8px;
+  /* 移除固定高度，让其自适应 */
+}
+
+/* 自定义滚动条 */
+/* === 统一滚动条样式 === */
+/* 策略表现模块滚动条 */
+.strategy-performance-widget .strategy-list {
+  height: 300px;
+  overflow-y: auto;
+}
+
+.strategy-performance-widget .strategy-list::-webkit-scrollbar,
+.strategy-performance-widget .strategy-list .ant-list-items::-webkit-scrollbar {
+  width: 6px;
+}
+
+.strategy-performance-widget .strategy-list::-webkit-scrollbar-track,
+.strategy-performance-widget .strategy-list .ant-list-items::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.strategy-performance-widget .strategy-list::-webkit-scrollbar-thumb,
+.strategy-performance-widget .strategy-list .ant-list-items::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.strategy-performance-widget .strategy-list::-webkit-scrollbar-thumb:hover,
+.strategy-performance-widget .strategy-list .ant-list-items::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 策略表现模块容器优化 - 确保滚动条可见 */
+.widget-content:has(.strategy-list-scroll) {
+  overflow: visible !important;
+}
+
+.widget-content:has(.strategy-list-scroll) .widget-body {
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow: visible !important;
+}
+
+/* 策略表现模块滚动容器 - 替代 :has() 方案 */
+.strategy-scroll-container {
+  overflow: visible !important;
+}
+
+.strategy-scroll-body {
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+}
+
+/* 策略表现模块：列表滚动容器 */
+.strategy-list-scroll {
+  width: 100%;
+  max-height: 300px;     /* 可按需要调整：280/320 等 */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;    /* 给滚动条留空间，避免遮挡内容 */
+}
+
+/* 滚动条样式（与其他模块一致） */
+.strategy-list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.strategy-list-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.strategy-list-scroll::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.strategy-list-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 涨跌排行模块滚动条 */
+.widget-content .ant-tabs-tabpane .ant-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.widget-content .ant-tabs-tabpane .ant-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.widget-content .ant-tabs-tabpane .ant-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.widget-content .ant-tabs-tabpane .ant-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 自选股模块滚动条 */
+.watchlist-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.watchlist-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.watchlist-scroll::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.watchlist-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 自选股模块容器优化 - 确保滚动功能正常 */
+.widget-content:has(.watchlist-scroll) {
+  overflow: visible !important; /* 覆盖基础样式的 overflow: hidden */
+}
+
+.widget-content:has(.watchlist-scroll) .widget-body {
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow: visible !important; /* 不裁剪滚动条 */
+}
+
+/* 自选股列表滚动容器：限制高度 + 启用滚动 */
+.watchlist-scroll {
+  width: 100%;
+  max-height: 320px;     /* 限制不超过父容器，可按需要调整 */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;    /* 滚动条空间 */
+}
+
+/* 涨跌排行模块容器优化 - 确保滚动功能正常 */
+.widget-content:has(.top-movers-scroll) {
+  overflow: visible !important; /* 覆盖基础 overflow: hidden，避免裁剪滚动条 */
+}
+
+.widget-content:has(.top-movers-scroll) .widget-body {
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow: visible !important;
+}
+
+/* 涨跌排行列表滚动容器：限制高度 + 启用滚动 */
+.top-movers-scroll {
+  width: 100%;
+  max-height: 320px;     /* 可按需要调整，如 280px/300px */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 4px;    /* 预留滚动条空间，避免内容被遮挡 */
+}
+
+/* 涨跌排行滚动条样式（与自选股一致） */
+.top-movers-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.top-movers-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.top-movers-scroll::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.top-movers-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 列表项样式优化 */
+.strategy-performance-widget .ant-list-item {
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+}
+
+.strategy-performance-widget .ant-list-item:hover {
+  background-color: #fafafa;
+}
+
+.strategy-performance-widget .ant-list-item:last-child {
+  border-bottom: none;
+}
+
+/* 确保统计区域不会压缩过度 */
+.strategy-performance-widget .widget-body > .ant-row {
+  flex-shrink: 0;
+}
+
+/* === Position Overview Widget - 持仓概览模块样式 === */
+.widget-content.position-overview-widget .widget-body {
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+}
+
+.position-overview-widget .widget-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px !important;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.position-overview-widget .position-stats {
+  margin-bottom: 4px;
+}
+
+.position-overview-widget .stat-item {
+  text-align: center;
+  padding: 6px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+}
+
+.position-overview-widget .stat-value {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.position-overview-widget .stat-label {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+
+.position-overview-widget .position-list {
+  flex: 1;
+  min-height: 0;
+}
+
+.position-overview-widget .position-list .ant-list {
+  height: 100%;
+  overflow-y: auto;
+  max-height: 280px;
+}
+
+.position-overview-widget .position-item {
+  padding: 8px 12px !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.2s;
+}
+
+.position-overview-widget .position-item:hover {
+  background-color: #f8f9fa;
+}
+
+.position-overview-widget .position-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 120px;
+}
+
+.position-overview-widget .position-avatar {
+  font-size: 10px;
+}
+
+.position-overview-widget .position-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.position-overview-widget .position-symbol {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.position-overview-widget .position-name {
+  font-size: 11px;
+  color: #666;
+  line-height: 1.2;
+}
+
+.position-overview-widget .position-data {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+  justify-content: space-around;
+}
+
+.position-overview-widget .position-data > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.position-overview-widget .data-label {
+  font-size: 10px;
+  color: #999;
+}
+
+.position-overview-widget .data-value {
+  font-size: 12px;
+  font-weight: 500;
+  color: #333;
+}
+
+.position-overview-widget .position-performance {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex: 0 0 100px;
+}
+
+.position-overview-widget .position-pnl {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.position-overview-widget .pnl-percent {
+  font-size: 11px;
+  margin-left: 4px;
+}
+
+.position-overview-widget .position-weight {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.position-overview-widget .risk-warning {
+  font-size: 10px;
+}
+
+.position-overview-widget .position-action {
+  flex: 0 0 auto;
+  margin-left: 8px;
+}
+
+/* === Community Feed Widget - 社区动态模块样式 === */
+.community-feed-widget .widget-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 8px !important;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 兼容性覆盖（不依赖 :has()）——确保滚动条不被裁剪、内容自适应铺满 */
+.community-scroll-container { 
+  overflow: visible !important; 
+}
+.community-scroll-body {
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+}
+
+/* 若浏览器支持 :has()，也一并覆盖（保持与其他模块一致的写法） */
+.widget-content:has(.community-feed-scroll) {
+  overflow: visible !important;
+}
+.widget-content:has(.community-feed-scroll) .widget-body {
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow: visible !important;
+}
+
+.community-feed-widget .community-list {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.community-feed-widget .community-list .ant-list {
+  height: 100%;
+  overflow-y: auto;
+}
+
+/* 社区动态：滚动容器（与其他模块一致） */
+.community-feed-scroll {
+  width: 100%;
+  height: auto !important;   /* 覆盖 100% 高度，确保 max-height 生效 */
+  max-height: 320px;         /* 可按需要调整：280/300/320 */
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 8px;        /* 预留滚动条空间，避免遮挡内容 */
+}
+
+/* 社区动态：滚动条样式（6px 宽度、圆角、悬停变色） */
+.community-feed-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.community-feed-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+.community-feed-scroll::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+.community-feed-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.community-feed-widget .community-item {
+  padding: 12px !important;
+  border-bottom: 1px solid #f0f0f0 !important;
+  transition: background-color 0.2s ease;
+}
+
+.community-feed-widget .community-item:hover {
+  background-color: #fafafa;
+}
+
+.community-feed-widget .community-item:last-child {
+  border-bottom: none !important;
+}
+
+.community-feed-widget .post-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.community-feed-widget .user-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.community-feed-widget .user-name {
+  font-weight: 500;
+  font-size: 14px;
+  color: #333;
+}
+
+.community-feed-widget .user-level {
+  font-size: 10px;
+  padding: 1px 4px;
+  border-radius: 2px;
+  color: white;
+  font-weight: bold;
+}
+
+.community-feed-widget .post-time {
+  font-size: 12px;
+  color: #999;
+}
+
+.community-feed-widget .post-content {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.community-feed-widget .post-tags {
+  margin-bottom: 8px;
+}
+
+.community-feed-widget .post-tags .ant-tag {
+  font-size: 11px;
+  padding: 2px 6px;
+  margin: 0 4px 4px 0;
+  border-radius: 10px;
+}
+
+.community-feed-widget .post-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.community-feed-widget .action-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.community-feed-widget .action-item:hover {
+  color: #1890ff;
+}
+
+.community-feed-widget .action-item.liked {
+  color: #ff4d4f;
+}
+
+.community-feed-widget .action-count {
+  font-size: 11px;
+}
+
+/* 自定义滚动条 */
+.community-feed-widget .ant-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.community-feed-widget .ant-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.community-feed-widget .ant-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.community-feed-widget .ant-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+  .community-feed-widget .community-item {
+    padding: 8px !important;
+  }
+  
+  .community-feed-widget .post-content {
+    font-size: 12px;
+  }
+  
+  .community-feed-widget .post-actions {
+    gap: 12px;
+  }
+  
+  .community-feed-widget .action-item {
+    font-size: 11px;
+  }
+}
+
+/* === Notifications Widget - 通知中心模块样式 === */
+
+/* 兼容性覆盖（不依赖 :has()）——确保滚动条不被裁剪、内容自适应铺满 */
+.notifications-scroll-container { 
+  overflow: visible !important; 
+}
+.notifications-scroll-body {
+  align-items: stretch !important;
+  justify-content: flex-start !important;
+  overflow: visible !important;
+}
+
+/* 若浏览器支持 :has()，也一并覆盖（保持与其他模块一致的写法） */
+.widget-content:has(.notifications-list-scroll) {
+  overflow: visible !important;
+}
+.widget-content:has(.notifications-list-scroll) .widget-body {
+  align-items: stretch;
+  justify-content: flex-start;
+  overflow: visible !important;
+}
+
+/* 通知中心：滚动容器（与其他模块一致） */
+.notifications-list-scroll {
+  width: 100% !important;
+  height: auto !important;   /* 覆盖原有 100% 高度，确保 max-height 生效 */
+  max-height: 320px;         /* 可按需要调整：280/300/320 */
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  padding: 8px;
+  padding-right: 12px;       /* 预留滚动条空间，避免遮挡内容 */
+}
+
+/* 通知中心：滚动条样式（6px 宽度、圆角、悬停变色） */
+.notifications-list-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.notifications-list-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+.notifications-list-scroll::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+.notifications-list-scroll::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+.notifications-widget .widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.notifications-widget .widget-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+.notifications-widget .widget-icon {
+  color: #1890ff;
+  font-size: 16px;
+}
+
+.notifications-widget .notification-badge {
+  margin-left: 4px;
+}
+
+.notifications-widget .widget-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notifications-widget .action-button {
+  font-size: 12px;
+  padding: 4px 8px;
+  height: auto;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.notifications-widget .action-button:hover {
+  color: #1890ff;
+}
+
+.notifications-widget .widget-body {
+  padding: 0;
+  height: calc(100% - 49px);
+  overflow: hidden;
+}
+
+.notifications-widget .notification-list-container {
+  height: 100%;
+  overflow: hidden;
+}
+
+.notifications-widget .notification-list {
+  height: 100%;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+.notifications-widget .notification-item {
+  padding: 12px !important;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: #fff;
+}
+
+.notifications-widget .notification-item:hover {
+  border-color: #d9d9d9;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transform: translateX(2px);
+}
+
+.notifications-widget .notification-item:last-child {
+  margin-bottom: 0;
+}
+
+.notifications-widget .notification-item.unread {
+  border-left: 4px solid #1890ff;
+  background: #f6ffed;
+}
+
+.notifications-widget .notification-item.unread.success {
+  background: #f6ffed;
+  border-left-color: #52c41a;
+}
+
+.notifications-widget .notification-item.unread.warning {
+  background: #fff7e6;
+  border-left-color: #faad14;
+}
+
+.notifications-widget .notification-item.unread.error {
+  background: #fff2f0;
+  border-left-color: #ff4d4f;
+}
+
+.notifications-widget .notification-item.unread.info {
+  background: #f6ffed;
+  border-left-color: #1890ff;
+}
+
+.notifications-widget .notification-item.read {
+  opacity: 0.7;
+  background: transparent;
+}
+
+.notifications-widget .notification-avatar {
+  background: transparent !important;
+  border: none !important;
+}
+
+.notifications-widget .notification-avatar.success {
+  color: #52c41a;
+}
+
+.notifications-widget .notification-avatar.warning {
+  color: #faad14;
+}
+
+.notifications-widget .notification-avatar.error {
+  color: #ff4d4f;
+}
+
+.notifications-widget .notification-avatar.info {
+  color: #1890ff;
+}
+
+.notifications-widget .notification-avatar.system {
+  color: #722ed1;
+}
+
+.notifications-widget .notification-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.notifications-widget .title-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+.notifications-widget .notification-item.read .title-text {
+  font-weight: 500;
+  color: #8c8c8c;
+}
+
+.notifications-widget .new-badge {
+  font-size: 11px;
+}
+
+.notifications-widget .notification-description {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.notifications-widget .message-text {
+  font-size: 13px;
+  color: #595959;
+  line-height: 1.4;
+  display: block;
+}
+
+.notifications-widget .notification-item.read .message-text {
+  color: #bfbfbf;
+}
+
+.notifications-widget .timestamp-text {
+  font-size: 12px;
+  color: #bfbfbf;
+}
+
+.notifications-widget .empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  color: #999;
+  font-size: 14px;
+}
+
+/* 自定义滚动条 */
+.notifications-widget .notification-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notifications-widget .notification-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.notifications-widget .notification-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+.notifications-widget .notification-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+  .notifications-widget .widget-header {
+    padding: 8px 12px;
+  }
+  
+  .notifications-widget .widget-title {
+    font-size: 13px;
+  }
+  
+  .notifications-widget .action-button {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+  
+  .notifications-widget .notification-item {
+    padding: 8px !important;
+    margin-bottom: 6px;
+  }
+  
+  .notifications-widget .title-text {
+    font-size: 13px;
+  }
+  
+  .notifications-widget .message-text {
+    font-size: 12px;
+  }
+  
+  .notifications-widget .timestamp-text {
+    font-size: 11px;
+  }
+  
+  .notifications-widget .notification-list {
+    padding: 6px;
+  }
+}

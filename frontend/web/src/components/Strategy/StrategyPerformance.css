@@ -1,0 +1,482 @@
+/* 策略性能分析容器样式 */
+.strategy-performance-container {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.performance-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border: none;
+}
+
+.performance-card .ant-card-head {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-bottom: none;
+  border-radius: 16px 16px 0 0;
+}
+
+.performance-card .ant-card-head-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.performance-card .ant-card-extra {
+  color: white;
+}
+
+.performance-card .ant-card-extra .ant-btn {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.performance-card .ant-card-extra .ant-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* 头部控制区域样式 */
+.performance-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+}
+
+.header-controls .ant-select {
+  margin-right: 8px;
+}
+
+.header-controls .ant-select .ant-select-selector {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.header-controls .ant-select .ant-select-arrow {
+  color: white;
+}
+
+.header-controls .ant-btn {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.header-controls .ant-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.header-controls .ant-btn-primary {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.header-controls .ant-btn-primary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* 标签页样式 */
+.performance-card .ant-tabs {
+  margin-top: 16px;
+}
+
+.performance-card .ant-tabs-tab {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.performance-card .ant-tabs-tab-active {
+  color: #667eea !important;
+}
+
+.performance-card .ant-tabs-ink-bar {
+  background: #667eea;
+}
+
+/* 概览页面样式 */
+.overview-content {
+  padding: 16px 0;
+}
+
+.metric-card {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.metric-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+}
+
+.metric-card .ant-card-body {
+  padding: 20px 16px;
+  text-align: center;
+}
+
+.metric-card .ant-statistic-title {
+  font-size: 13px;
+  color: #8c8c8c;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.metric-card .ant-statistic-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.metric-card .ant-statistic-content-prefix {
+  font-size: 16px;
+}
+
+/* 胜率卡片样式 */
+.win-rate-card {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.win-rate-title {
+  font-size: 13px;
+  color: #8c8c8c;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+/* 图表卡片样式 */
+.chart-card {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  margin-bottom: 16px;
+}
+
+.chart-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.chart-card .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.chart-card .ant-card-body {
+  padding: 24px;
+}
+
+/* 净值曲线页面样式 */
+.equity-content {
+  padding: 16px 0;
+}
+
+/* 收益分析页面样式 */
+.returns-content {
+  padding: 16px 0;
+}
+
+/* 交易记录页面样式 */
+.trades-content {
+  padding: 16px 0;
+}
+
+.trades-card {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+}
+
+.trades-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.trades-card .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.trades-card .ant-table {
+  font-size: 13px;
+}
+
+.trades-card .ant-table-thead > tr > th {
+  background: #fafafa;
+  font-weight: 600;
+  color: #262626;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.trades-card .ant-table-tbody > tr:hover > td {
+  background: #f5f7fa;
+}
+
+.trades-card .ant-tag {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* 风险分析页面样式 */
+.risk-content {
+  padding: 16px 0;
+}
+
+.risk-metrics-card {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  height: 100%;
+}
+
+.risk-metrics-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.risk-metrics-card .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.risk-metrics-card .ant-card-body {
+  padding: 24px;
+}
+
+.risk-metrics-card .ant-statistic {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.risk-metrics-card .ant-statistic-title {
+  font-size: 12px;
+  color: #8c8c8c;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.risk-metrics-card .ant-statistic-content {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.sector-card {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  height: 100%;
+}
+
+.sector-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.sector-card .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.sector-card .ant-card-body {
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .strategy-performance-container {
+    padding: 16px;
+  }
+  
+  .performance-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .header-controls {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 768px) {
+  .strategy-performance-container {
+    padding: 12px;
+  }
+  
+  .performance-card {
+    border-radius: 12px;
+  }
+  
+  .performance-card .ant-card-head {
+    border-radius: 12px 12px 0 0;
+    padding: 16px 20px;
+  }
+  
+  .performance-card .ant-card-body {
+    padding: 16px 20px;
+  }
+  
+  .performance-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .header-controls {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .header-controls .ant-select {
+    flex: 1;
+    min-width: 80px;
+  }
+  
+  .metric-card .ant-card-body {
+    padding: 16px 12px;
+  }
+  
+  .metric-card .ant-statistic-title {
+    font-size: 12px;
+  }
+  
+  .metric-card .ant-statistic-content-value {
+    font-size: 16px !important;
+  }
+  
+  .chart-card .ant-card-body {
+    padding: 16px;
+  }
+  
+  .trades-card .ant-table {
+    font-size: 12px;
+  }
+  
+  .risk-metrics-card .ant-card-body,
+  .sector-card .ant-card-body {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .overview-content .ant-col {
+    margin-bottom: 12px;
+  }
+  
+  .win-rate-card .ant-progress-circle {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  
+  .header-controls {
+    justify-content: center;
+  }
+  
+  .header-controls .ant-btn {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .header-controls .ant-btn span {
+    display: none;
+  }
+  
+  .header-controls .ant-btn .anticon {
+    margin-right: 0;
+  }
+}
+
+/* 加载状态样式 */
+.ant-spin-container {
+  min-height: 400px;
+}
+
+/* 动画效果 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.metric-card {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.metric-card:nth-child(2n) {
+  animation-delay: 0.1s;
+}
+
+.metric-card:nth-child(3n) {
+  animation-delay: 0.2s;
+}
+
+.metric-card:nth-child(4n) {
+  animation-delay: 0.3s;
+}
+
+.chart-card {
+  animation: fadeInUp 0.4s ease-out;
+}
+
+/* 滚动条样式 */
+.strategy-performance-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.strategy-performance-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.strategy-performance-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.strategy-performance-container::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 表格滚动条样式 */
+.ant-table-body::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.ant-table-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.ant-table-body::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.ant-table-body::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

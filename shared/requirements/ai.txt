@@ -1,0 +1,4 @@
+# AI相关依赖
+openai==1.3.0
+dashscope==1.13.0
+google-generativeai==0.3.0

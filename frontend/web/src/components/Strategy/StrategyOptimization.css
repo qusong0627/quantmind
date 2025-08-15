@@ -1,0 +1,610 @@
+/* 策略优化建议模态框样式 */
+.strategy-optimization-modal {
+  top: 20px;
+}
+
+.strategy-optimization-modal .ant-modal-content {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.strategy-optimization-modal .ant-modal-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-bottom: none;
+  padding: 20px 24px;
+}
+
+.optimization-modal-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.strategy-optimization-modal .ant-modal-close {
+  color: white;
+}
+
+.strategy-optimization-modal .ant-modal-close:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.strategy-optimization-modal .ant-modal-body {
+  padding: 0;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* 优化内容区域样式 */
+.optimization-content {
+  padding: 24px;
+}
+
+.optimization-content .ant-tabs {
+  margin-top: 0;
+}
+
+.optimization-content .ant-tabs-tab {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.optimization-content .ant-tabs-tab-active {
+  color: #667eea !important;
+}
+
+.optimization-content .ant-tabs-ink-bar {
+  background: #667eea;
+}
+
+/* 建议页面样式 */
+.suggestions-content {
+  padding-top: 16px;
+}
+
+.optimization-header {
+  margin-bottom: 24px;
+}
+
+/* 评分卡片样式 */
+.score-card {
+  border-radius: 12px;
+  border: 2px solid #f0f0f0;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.score-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.score-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 0;
+}
+
+.score-circle {
+  flex-shrink: 0;
+}
+
+.score-text {
+  text-align: center;
+}
+
+.score-number {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.score-label {
+  font-size: 10px;
+  color: #8c8c8c;
+  line-height: 1;
+}
+
+.score-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.score-info .ant-typography {
+  margin-bottom: 4px;
+}
+
+/* 风险卡片和建议数量卡片样式 */
+.risk-card,
+.suggestions-count-card {
+  border-radius: 12px;
+  border: 2px solid #f0f0f0;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.risk-card:hover,
+.suggestions-count-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.risk-card .ant-card-body,
+.suggestions-count-card .ant-card-body {
+  padding: 20px;
+  text-align: center;
+}
+
+.risk-card .ant-statistic-title,
+.suggestions-count-card .ant-statistic-title {
+  font-size: 13px;
+  color: #8c8c8c;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.risk-card .ant-statistic-content,
+.suggestions-count-card .ant-statistic-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* 建议列表卡片样式 */
+.suggestions-list-card {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+}
+
+.suggestions-list-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.suggestions-list-card .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.suggestions-list-card .ant-card-body {
+  padding: 16px;
+}
+
+/* 建议项样式 */
+.suggestion-item {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  padding: 20px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.suggestion-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
+}
+
+.suggestion-item:last-child {
+  margin-bottom: 0;
+}
+
+.suggestion-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.suggestion-title > span {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.suggestion-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.suggestion-tags .ant-tag {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.suggestion-description {
+  margin-top: 8px;
+}
+
+.suggestion-description .ant-typography {
+  margin-bottom: 12px;
+  color: #595959;
+  line-height: 1.6;
+}
+
+.suggestion-metrics {
+  padding: 12px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.suggestion-item .ant-list-item-action {
+  margin-top: 16px;
+}
+
+.suggestion-item .ant-list-item-action > li {
+  padding: 0 4px;
+}
+
+/* 历史页面样式 */
+.history-content {
+  padding-top: 16px;
+}
+
+.history-card {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+}
+
+.history-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.history-card .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.history-card .ant-card-body {
+  padding: 24px;
+}
+
+.history-item {
+  padding: 8px 0;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.history-header .ant-typography {
+  margin: 0;
+}
+
+.history-result {
+  margin-top: 4px;
+}
+
+/* 性能对比页面样式 */
+.performance-content {
+  padding-top: 16px;
+}
+
+.performance-card {
+  border-radius: 12px;
+  border: 2px solid #f0f0f0;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.performance-card.before {
+  border-color: #d9d9d9;
+}
+
+.performance-card.after {
+  border-color: #52c41a;
+  background: linear-gradient(135deg, rgba(82, 196, 26, 0.02), rgba(82, 196, 26, 0.05));
+}
+
+.performance-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.performance-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.performance-card.after .ant-card-head {
+  background: rgba(82, 196, 26, 0.1);
+}
+
+.performance-card .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.performance-card .ant-card-body {
+  padding: 24px;
+}
+
+.performance-card .ant-statistic {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.performance-card .ant-statistic-title {
+  font-size: 13px;
+  color: #8c8c8c;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.performance-card .ant-statistic-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+/* AI洞察页面样式 */
+.ai-insights-content {
+  padding-top: 16px;
+}
+
+.insights-card {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+}
+
+.insights-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.insights-card .ant-card-head-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.insights-card .ant-card-body {
+  padding: 16px;
+}
+
+.insight-item {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  padding: 16px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.insight-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.insight-item:last-child {
+  margin-bottom: 0;
+}
+
+.insight-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.insight-title > span {
+  font-size: 15px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.insight-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.insight-meta .ant-tag {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.insight-meta .ant-rate {
+  margin: 0;
+}
+
+.insight-item .ant-list-item-meta-description {
+  color: #595959;
+  line-height: 1.6;
+  margin-top: 8px;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .strategy-optimization-modal {
+    width: 95% !important;
+    max-width: none;
+  }
+  
+  .optimization-content {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .strategy-optimization-modal {
+    top: 10px;
+    width: 98% !important;
+  }
+  
+  .strategy-optimization-modal .ant-modal-body {
+    max-height: 85vh;
+  }
+  
+  .optimization-content {
+    padding: 12px;
+  }
+  
+  .optimization-header {
+    margin-bottom: 16px;
+  }
+  
+  .score-content {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+  
+  .score-info {
+    text-align: center;
+  }
+  
+  .suggestion-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .suggestion-tags {
+    justify-content: flex-start;
+  }
+  
+  .suggestion-metrics {
+    padding: 8px;
+  }
+  
+  .suggestion-item .ant-list-item-action {
+    margin-top: 12px;
+  }
+  
+  .history-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+  
+  .insight-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .insight-meta {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 576px) {
+  .optimization-content .ant-tabs-tab {
+    font-size: 12px;
+    padding: 8px 12px;
+  }
+  
+  .suggestion-item,
+  .insight-item {
+    padding: 12px;
+  }
+  
+  .performance-card .ant-card-body {
+    padding: 16px;
+  }
+  
+  .history-card .ant-card-body {
+    padding: 16px;
+  }
+}
+
+/* 动画效果 */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.suggestion-item,
+.insight-item {
+  animation: slideInUp 0.3s ease-out;
+}
+
+.suggestion-item:nth-child(2n) {
+  animation-delay: 0.1s;
+}
+
+.suggestion-item:nth-child(3n) {
+  animation-delay: 0.2s;
+}
+
+.score-card,
+.risk-card,
+.suggestions-count-card {
+  animation: slideInUp 0.4s ease-out;
+}
+
+.score-card {
+  animation-delay: 0.1s;
+}
+
+.risk-card {
+  animation-delay: 0.2s;
+}
+
+.suggestions-count-card {
+  animation-delay: 0.3s;
+}
+
+/* 滚动条样式 */
+.strategy-optimization-modal .ant-modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.strategy-optimization-modal .ant-modal-body::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.strategy-optimization-modal .ant-modal-body::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.strategy-optimization-modal .ant-modal-body::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 加载状态样式 */
+.suggestion-item.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.suggestion-item.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  border-radius: 12px;
+}

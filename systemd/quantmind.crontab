@@ -1,0 +1,129 @@
+# QuantMind 定时任务配置
+# 使用方法: crontab -u quantmind /opt/quantmind/systemd/quantmind.crontab
+
+# 设置环境变量
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+SHELL=/bin/bash
+MAILTO=admin@quantmind.com
+
+# ==================== 监控任务 ====================
+
+# 每5分钟执行服务状态监控
+*/5 * * * * /opt/quantmind/scripts/monitoring/service_monitor.sh >/dev/null 2>&1
+
+# 每小时生成详细监控报告
+0 * * * * /opt/quantmind/scripts/monitoring/service_monitor.sh --detailed-report
+
+# 每天凌晨生成监控摘要报告
+0 1 * * * /opt/quantmind/scripts/monitoring/service_monitor.sh --daily-summary
+
+# ==================== 备份任务 ====================
+
+# 每天凌晨2点执行数据库备份
+0 2 * * * /opt/quantmind/scripts/backup/database_backup.sh --compress
+
+# 每周日凌晨3点执行完整备份
+0 3 * * 0 /opt/quantmind/scripts/backup/database_backup.sh --full-backup
+
+# 每月1号凌晨4点清理过期备份
+0 4 1 * * /opt/quantmind/scripts/backup/database_backup.sh --cleanup-old
+
+# ==================== 维护任务 ====================
+
+# 每天凌晨1点清理应用日志
+0 1 * * * /opt/quantmind/scripts/maintenance/log_cleanup.sh app
+
+# 每天凌晨1:30清理Docker日志
+30 1 * * * /opt/quantmind/scripts/maintenance/log_cleanup.sh docker
+
+# 每周日凌晨2点执行完整日志清理
+0 2 * * 0 /opt/quantmind/scripts/maintenance/log_cleanup.sh all
+
+# 每月15号清理临时文件
+0 3 15 * * /opt/quantmind/scripts/maintenance/log_cleanup.sh temp
+
+# ==================== 系统优化任务 ====================
+
+# 每天凌晨5点重启Docker服务(可选)
+# 0 5 * * * systemctl restart docker
+
+# 每周一凌晨6点重启QuantMind服务
+0 6 * * 1 systemctl restart quantmind
+
+# 每月1号凌晨5点清理Docker镜像和容器
+0 5 1 * * docker system prune -f --volumes
+
+# ==================== 健康检查任务 ====================
+
+# 每15分钟检查关键服务状态
+*/15 * * * * /opt/quantmind/scripts/monitoring/service_monitor.sh --health-check
+
+# 每小时检查磁盘空间
+0 * * * * df -h | awk '$5 > 85 {print $0}' | /opt/quantmind/scripts/monitoring/alert_webhook.sh HIGH "磁盘空间不足: " 2>/dev/null
+
+# 每6小时检查内存使用
+0 */6 * * * free -m | awk 'NR==2{printf "Memory Usage: %s/%sMB (%.2f%%)\n", $3,$2,$3*100/$2 }' | awk '{if($5 > 90) system("/opt/quantmind/scripts/monitoring/alert_webhook.sh HIGH \"内存使用率过高: \" $0")}'
+
+# ==================== 数据同步任务 ====================
+
+# 每个交易日早上8:30同步市场数据
+30 8 * * 1-5 /opt/quantmind/scripts/data/sync_market_data.sh
+
+# 每个交易日收盘后同步当日数据
+30 15 * * 1-5 /opt/quantmind/scripts/data/sync_daily_data.sh
+
+# 每周六凌晨同步历史数据
+0 3 * * 6 /opt/quantmind/scripts/data/sync_historical_data.sh
+
+# ==================== 报告生成任务 ====================
+
+# 每个交易日收盘后生成日报
+0 16 * * 1-5 /opt/quantmind/scripts/reports/generate_daily_report.sh
+
+# 每周一早上生成周报
+0 9 * * 1 /opt/quantmind/scripts/reports/generate_weekly_report.sh
+
+# 每月1号生成月报
+0 10 1 * * /opt/quantmind/scripts/reports/generate_monthly_report.sh
+
+# ==================== 安全检查任务 ====================
+
+# 每天检查系统安全状态
+0 23 * * * /opt/quantmind/scripts/security/security_check.sh
+
+# 每周检查SSL证书有效期
+0 12 * * 1 /opt/quantmind/scripts/security/ssl_check.sh
+
+# 每月更新安全规则
+0 4 1 * * /opt/quantmind/scripts/security/update_security_rules.sh
+
+# ==================== 性能优化任务 ====================
+
+# 每天凌晨优化数据库
+0 3 * * * /opt/quantmind/scripts/optimization/optimize_database.sh
+
+# 每周清理缓存
+0 4 * * 0 /opt/quantmind/scripts/optimization/clear_cache.sh
+
+# 每月分析性能指标
+0 6 1 * * /opt/quantmind/scripts/optimization/performance_analysis.sh
+
+# ==================== 自定义任务示例 ====================
+
+# 示例：每天中午12点发送系统状态摘要
+# 0 12 * * * /opt/quantmind/scripts/monitoring/service_monitor.sh --summary | /opt/quantmind/scripts/monitoring/alert_webhook.sh INFO "每日系统状态摘要"
+
+# 示例：每周五下午5点备份配置文件
+# 0 17 * * 5 tar -czf /opt/quantmind/backups/config_$(date +%Y%m%d).tar.gz /opt/quantmind/*.yml /opt/quantmind/.env
+
+# 示例：每月检查依赖更新
+# 0 8 1 * * /opt/quantmind/scripts/maintenance/check_updates.sh
+
+# ==================== 注意事项 ====================
+# 1. 确保所有脚本都有执行权限: chmod +x /opt/quantmind/scripts/**/*.sh
+# 2. 检查脚本路径是否正确
+# 3. 根据实际需求调整执行频率
+# 4. 监控cron任务的执行日志: tail -f /var/log/cron
+# 5. 定期检查磁盘空间，避免日志文件过大
+# 6. 在生产环境中测试所有定时任务
+# 7. 设置合适的MAILTO地址接收错误通知

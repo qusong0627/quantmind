@@ -1,0 +1,90 @@
+# Web框架
+fastapi
+uvicorn[standard]
+starlette
+
+# 数据库
+sqlalchemy
+alembic
+mysqlclient
+redis
+influxdb-client
+
+# 数据处理
+pandas
+numpy
+scipy
+
+# HTTP客户端
+httpx
+requests
+aiohttp
+
+# 认证和安全
+passlib[bcrypt]
+python-jose[cryptography]
+python-multipart
+bcrypt
+PyJWT
+
+# 任务调度
+apscheduler
+celery
+
+# 配置管理
+python-dotenv
+pydantic
+pydantic-settings
+
+# 日志
+loguru
+
+# 测试
+pytest
+pytest-asyncio
+pytest-cov
+
+# 开发工具
+black
+flake8
+isort
+
+# 金融数据
+yfinance
+ta-lib
+quandl
+
+# 机器学习
+scikit-learn
+lightgbm
+xgboost
+
+# 图表和可视化
+plotly
+matplotlib
+
+# 工具库
+click
+tqdm
+pytz
+python-dateutil
+
+# 监控
+prometheus-client
+
+# 缓存
+cachetools
+
+# 异步支持
+aiofiles
+aioredis
+
+# 数据验证
+cerberus
+marshmallow
+
+# 网络
+websockets
+
+# 系统监控
+psutil

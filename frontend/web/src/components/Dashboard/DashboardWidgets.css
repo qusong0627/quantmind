@@ -1,0 +1,180 @@
+/* Dashboard Widgets Styles */
+
+/* 通用Widget样式 */
+.widget-content {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.widget-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.widget-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.widget-body {
+  padding: 16px 20px;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 通知中心模块样式 */
+.notifications-widget .widget-header {
+  padding: 12px 16px 8px;
+}
+
+.notifications-widget .widget-header h3 {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notifications-widget .widget-header .ant-space {
+  gap: 8px !important;
+}
+
+.notifications-widget .widget-header .ant-btn {
+  font-size: 12px;
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 4px;
+}
+
+.notifications-widget .widget-body {
+  padding: 0;
+  overflow: hidden;
+}
+
+.notifications-widget .ant-list {
+  height: 100%;
+}
+
+.notifications-widget .ant-list-items {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.notifications-widget .ant-list-item {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f5f5f5;
+  margin: 0;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+.notifications-widget .ant-list-item:hover {
+  background-color: #fafafa;
+}
+
+.notifications-widget .ant-list-item:last-child {
+  border-bottom: none;
+}
+
+.notifications-widget .ant-list-item.unread {
+  background-color: #f6ffed;
+  border-left: 3px solid #52c41a;
+}
+
+.notifications-widget .ant-list-item.unread:hover {
+  background-color: #f0f9e8;
+}
+
+.notifications-widget .ant-list-item-meta {
+  align-items: flex-start;
+}
+
+.notifications-widget .ant-list-item-meta-avatar {
+  margin-right: 12px;
+}
+
+.notifications-widget .ant-list-item-meta-content {
+  flex: 1;
+}
+
+.notifications-widget .ant-list-item-meta-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.notifications-widget .ant-list-item-meta-description {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.notifications-widget .notification-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.notifications-widget .notification-time {
+  font-size: 11px;
+  color: #999;
+}
+
+.notifications-widget .notification-type-tag {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 2px;
+  line-height: 1.2;
+}
+
+.notifications-widget .ant-empty {
+  padding: 20px;
+}
+
+.notifications-widget .ant-empty-description {
+  font-size: 12px;
+  color: #999;
+}
+
+/* 响应式样式 */
+@media (max-width: 768px) {
+  .notifications-widget .widget-header {
+    padding: 10px 12px 6px;
+  }
+  
+  .notifications-widget .widget-header h3 {
+    font-size: 13px;
+  }
+  
+  .notifications-widget .widget-header .ant-btn {
+    font-size: 11px;
+    height: 22px;
+    padding: 0 6px;
+  }
+  
+  .notifications-widget .ant-list-item {
+    padding: 10px 12px;
+  }
+  
+  .notifications-widget .ant-list-item-meta-title {
+    font-size: 12px;
+  }
+  
+  .notifications-widget .ant-list-item-meta-description {
+    font-size: 11px;
+  }
+}

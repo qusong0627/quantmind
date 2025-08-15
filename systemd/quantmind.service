@@ -1,0 +1,62 @@
+[Unit]
+Description=QuantMind Quantitative Trading Platform
+Documentation=https://github.com/quantmind/quantmind
+After=docker.service
+Requires=docker.service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=forking
+User=quantmind
+Group=quantmind
+WorkingDirectory=/opt/quantmind
+
+# 环境变量
+Environment=COMPOSE_PROJECT_NAME=quantmind
+Environment=COMPOSE_FILE=docker-compose.prod.yml
+EnvironmentFile=-/opt/quantmind/.env
+
+# 启动命令
+ExecStartPre=/usr/bin/docker-compose -f docker-compose.prod.yml pull --quiet
+ExecStartPre=/usr/bin/docker-compose -f docker-compose.prod.yml down --remove-orphans
+ExecStart=/usr/bin/docker-compose -f docker-compose.prod.yml up -d
+ExecReload=/usr/bin/docker-compose -f docker-compose.prod.yml restart
+ExecStop=/usr/bin/docker-compose -f docker-compose.prod.yml down
+
+# 健康检查
+ExecStartPost=/bin/sleep 30
+ExecStartPost=/opt/quantmind/scripts/monitoring/service_monitor.sh --quick-check
+
+# 重启策略
+Restart=always
+RestartSec=10
+StartLimitInterval=60
+StartLimitBurst=3
+
+# 资源限制
+LimitNOFILE=65536
+LimitNPROC=4096
+MemoryLimit=8G
+CPUQuota=400%
+
+# 安全设置
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/quantmind/logs /opt/quantmind/data /opt/quantmind/backups
+
+# 日志设置
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=quantmind
+
+# 超时设置
+TimeoutStartSec=300
+TimeoutStopSec=120
+TimeoutReloadSec=60
+
+[Install]
+WantedBy=multi-user.target
+Alias=quantmind.service

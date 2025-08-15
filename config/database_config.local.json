@@ -1,0 +1,229 @@
+{
+  "_metadata": {
+    "name": "QuantMind 阿里云生产环境配置",
+    "version": "2.0.0",
+    "description": "阿里云RDS MySQL数据库生产环境配置",
+    "last_updated": "2025-08-05",
+    "author": "QuantMind Team",
+    "environment": "production",
+    "source": "阿里云RDS MySQL 8.0.36"
+  },
+  "_instructions": {
+    "setup": [
+      "1. 阿里云MySQL已配置为主数据库",
+      "2. 本地SQLite作为备用数据库",
+      "3. 环境变量优先级高于配置文件",
+      "4. 支持读写分离和故障转移"
+    ],
+    "priority": "数据库按priority字段排序，数字越小优先级越高",
+    "fallback": "当阿里云数据库失败时，自动切换到本地SQLite",
+    "environment_variables": "支持通过环境变量覆盖配置"
+  },
+  "databases": {
+    "aliyun_mysql_primary": {
+      "name": "阿里云MySQL主数据库",
+      "description": "阿里云RDS MySQL 8.0数据库，存储量化交易系统核心数据",
+      "type": "mysql",
+      "role": "primary",
+      "priority": 1,
+      "status": "active",
+      "required": true,
+      "connection": {
+        "host": "rm-cn-zqb4dou81000440o.rwlb.rds.aliyuncs.com",
+        "port": 3306,
+        "database": "quantmind",
+        "username": "qusong",
+        "password": "Js897459835@",
+        "charset": "utf8mb4",
+        "collation": "utf8mb4_0900_ai_ci",
+        "timezone": "+08:00",
+        "ssl": false,
+        "connect_timeout": 30,
+        "read_timeout": 30,
+        "write_timeout": 30
+      },
+      "pool_config": {
+        "pool_size": 15,
+        "max_overflow": 30,
+        "pool_timeout": 30,
+        "pool_recycle": 3600,
+        "pool_pre_ping": true,
+        "echo": false
+      },
+      "env_vars": {
+        "host": "ALIYUN_MYSQL_HOST",
+        "port": "ALIYUN_MYSQL_PORT",
+        "database": "ALIYUN_MYSQL_DATABASE",
+        "username": "ALIYUN_MYSQL_USERNAME",
+        "password": "ALIYUN_MYSQL_PASSWORD",
+        "ssl_mode": "ALIYUN_MYSQL_SSL_MODE"
+      },
+      "features": {
+        "transactions": true,
+        "foreign_keys": true,
+        "full_text_search": true,
+        "json_support": true,
+        "partitioning": true,
+        "replication": false,
+        "backup": true,
+        "monitoring": true
+      },
+      "performance": {
+        "connection_time_ms": 130,
+        "query_time_ms": 27,
+        "throughput_qps": 1000,
+        "concurrent_connections": 50
+      },
+      "backup": {
+        "enabled": true,
+        "schedule": "0 2 * * *",
+        "retention_days": 30,
+        "backup_path": "backups/aliyun_mysql",
+        "compression": true,
+        "encryption": true
+      }
+    },
+    "sqlite_local": {
+      "name": "本地SQLite数据库",
+      "description": "本地SQLite数据库，作为备用和开发环境使用",
+      "type": "sqlite",
+      "role": "backup",
+      "priority": 10,
+      "status": "active",
+      "required": false,
+      "connection": {
+        "path": "data/quantmind.db",
+        "timeout": 30,
+        "check_same_thread": false,
+        "isolation_level": null
+      },
+      "pool_config": {
+        "pool_size": 1,
+        "max_overflow": 0,
+        "pool_timeout": 30,
+        "pool_recycle": -1,
+        "echo": false
+      },
+      "features": {
+        "transactions": true,
+        "foreign_keys": true,
+        "full_text_search": true,
+        "json_support": true,
+        "backup": true
+      }
+    },
+    "redis_cache": {
+      "name": "Redis缓存",
+      "description": "Redis内存缓存，存储热点数据和会话信息",
+      "type": "redis",
+      "role": "session",
+      "priority": 1,
+      "status": "optional",
+      "required": false,
+      "connection": {
+        "host": "localhost",
+        "port": 6379,
+        "database": 0,
+        "password": null,
+        "decode_responses": true,
+        "connect_timeout": 5,
+        "socket_timeout": 5
+      },
+      "env_vars": {
+        "host": "REDIS_HOST",
+        "port": "REDIS_PORT",
+        "password": "REDIS_PASSWORD"
+      }
+    }
+  },
+  "connection_strategies": {
+    "read_write_split": {
+      "enabled": true,
+      "write_db": "aliyun_mysql_primary",
+      "read_dbs": [
+        "aliyun_mysql_primary"
+      ],
+      "read_weight": {
+        "aliyun_mysql_primary": 100
+      }
+    },
+    "failover": {
+      "enabled": true,
+      "primary": "aliyun_mysql_primary",
+      "fallback": [
+        "sqlite_local"
+      ],
+      "health_check_interval": 30,
+      "max_retry_attempts": 3,
+      "retry_delay": 5,
+      "auto_recovery": true
+    },
+    "load_balancing": {
+      "enabled": false,
+      "algorithm": "round_robin",
+      "health_check": true
+    }
+  },
+  "monitoring": {
+    "enabled": true,
+    "metrics": {
+      "connection_pool": true,
+      "query_performance": true,
+      "error_rates": true,
+      "connection_count": true,
+      "slow_queries": true
+    },
+    "alerts": {
+      "connection_failure": true,
+      "slow_queries": true,
+      "high_cpu": true,
+      "low_disk_space": true,
+      "pool_exhaustion": true
+    },
+    "thresholds": {
+      "slow_query_time": 1.0,
+      "connection_pool_usage": 0.8,
+      "error_rate": 0.05,
+      "response_time": 0.5
+    }
+  },
+  "security": {
+    "encryption": {
+      "at_rest": true,
+      "in_transit": true,
+      "key_rotation": true
+    },
+    "access_control": {
+      "role_based": true,
+      "ip_whitelist": [],
+      "audit_logging": true,
+      "password_policy": true
+    },
+    "ssl": {
+      "enabled": true,
+      "verify_cert": true,
+      "ca_cert_path": null
+    }
+  },
+  "performance_tuning": {
+    "connection_pooling": {
+      "enabled": true,
+      "min_pool_size": 5,
+      "max_pool_size": 50,
+      "idle_timeout": 300,
+      "max_lifetime": 3600
+    },
+    "query_optimization": {
+      "enabled": true,
+      "slow_query_log": true,
+      "explain_analyze": true,
+      "index_suggestions": true
+    },
+    "caching": {
+      "query_cache": true,
+      "result_cache": true,
+      "metadata_cache": true,
+      "cache_ttl": 3600
+    }
+  }
+}

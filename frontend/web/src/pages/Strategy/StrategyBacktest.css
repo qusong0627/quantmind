@@ -1,0 +1,422 @@
+/* 策略回测页面样式 */
+.strategy-backtest {
+  padding: 24px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 回测头部 */
+.backtest-header {
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.backtest-info h3 {
+  margin: 0 0 8px 0;
+  color: #1890ff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.backtest-info p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.backtest-actions {
+  display: flex;
+  align-items: center;
+}
+
+.backtest-progress {
+  margin-top: 16px;
+}
+
+/* 回测内容区域 */
+.backtest-content {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.backtest-content .ant-tabs {
+  padding: 0;
+}
+
+.backtest-content .ant-tabs-nav {
+  padding: 0 24px;
+  margin: 0;
+}
+
+.backtest-content .ant-tabs-content-holder {
+  padding: 24px;
+}
+
+/* 配置卡片 */
+.config-card {
+  height: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.config-card .ant-card-head {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-bottom: none;
+}
+
+.config-card .ant-card-head-title {
+  color: white;
+  font-weight: 600;
+}
+
+.config-card .ant-form-item-label > label {
+  font-weight: 500;
+  color: #333;
+}
+
+/* 回测结果 */
+.backtest-results {
+  min-height: 600px;
+}
+
+.metric-card {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.metric-value {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1890ff;
+  margin-bottom: 4px;
+}
+
+.metric-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.chart-card {
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.chart-card .ant-card-head {
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.chart-card .ant-card-body {
+  padding: 24px;
+}
+
+/* 性能分析 */
+.performance-analysis {
+  min-height: 400px;
+}
+
+.analysis-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.analysis-card .ant-card-head {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  border-bottom: none;
+}
+
+.analysis-card .ant-card-head-title {
+  color: white;
+  font-weight: 600;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.metric-row:last-child {
+  border-bottom: none;
+}
+
+.metric-row span:first-child {
+  color: #666;
+  font-weight: 500;
+}
+
+.metric-row .metric-value {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.metric-row .metric-value.positive {
+  color: #52c41a;
+}
+
+.metric-row .metric-value.negative {
+  color: #ff4d4f;
+}
+
+/* 交易分析 */
+.trade-analysis {
+  min-height: 400px;
+}
+
+.trades-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.trades-card .ant-card-head {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  border-bottom: none;
+}
+
+.trades-card .ant-card-head-title {
+  color: white;
+  font-weight: 600;
+}
+
+.trades-summary {
+  background: #fafafa;
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+}
+
+.summary-item {
+  text-align: center;
+}
+
+.summary-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1890ff;
+  margin-bottom: 4px;
+}
+
+.summary-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 交易表格样式 */
+.trade-long {
+  color: #52c41a;
+  font-weight: 600;
+}
+
+.trade-short {
+  color: #ff4d4f;
+  font-weight: 600;
+}
+
+.pnl-positive {
+  color: #52c41a;
+  font-weight: 600;
+}
+
+.pnl-negative {
+  color: #ff4d4f;
+  font-weight: 600;
+}
+
+/* 高级配置 */
+.advanced-config h4 {
+  color: #1890ff;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .strategy-backtest {
+    padding: 16px;
+  }
+  
+  .backtest-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .backtest-actions .ant-btn {
+    width: 120px;
+  }
+}
+
+@media (max-width: 768px) {
+  .strategy-backtest {
+    padding: 12px;
+  }
+  
+  .backtest-content .ant-tabs-content-holder {
+    padding: 16px;
+  }
+  
+  .metric-card {
+    margin-bottom: 16px;
+  }
+  
+  .metric-value {
+    font-size: 20px;
+  }
+  
+  .summary-value {
+    font-size: 16px;
+  }
+}
+
+/* 动画效果 */
+.backtest-results,
+.performance-analysis,
+.trade-analysis {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 加载状态 */
+.ant-spin-container {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* 进度条样式 */
+.ant-progress-line {
+  margin-bottom: 8px;
+}
+
+.ant-progress-text {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+/* 标签页样式 */
+.ant-tabs-tab {
+  font-weight: 500;
+}
+
+.ant-tabs-tab-active {
+  font-weight: 600;
+}
+
+/* 卡片阴影效果 */
+.ant-card {
+  transition: box-shadow 0.3s ease;
+}
+
+.ant-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* 按钮样式 */
+.ant-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:focus {
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* 表格样式 */
+.ant-table-thead > tr > th {
+  background: #fafafa;
+  font-weight: 600;
+  color: #333;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background: #f5f5f5;
+}
+
+/* 输入框样式 */
+.ant-input,
+.ant-input-number,
+.ant-select-selector {
+  border-radius: 6px;
+  border: 1px solid #d9d9d9;
+  transition: all 0.3s ease;
+}
+
+.ant-input:focus,
+.ant-input-number:focus,
+.ant-select-focused .ant-select-selector {
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* 日期选择器样式 */
+.ant-picker {
+  border-radius: 6px;
+  border: 1px solid #d9d9d9;
+}
+
+.ant-picker:hover,
+.ant-picker-focused {
+  border-color: #667eea;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* 提示信息样式 */
+.ant-alert {
+  border-radius: 6px;
+  border: none;
+}
+
+.ant-alert-info {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  border-left: 4px solid #2196f3;
+}
+
+/* 模态框样式 */
+.ant-modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-bottom: none;
+}
+
+.ant-modal-title {
+  color: white;
+  font-weight: 600;
+}
+
+.ant-modal-close {
+  color: white;
+}
+
+.ant-modal-close:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 工具提示样式 */
+.ant-tooltip-inner {
+  background: #333;
+  border-radius: 6px;
+}
+
+.ant-tooltip-arrow-content {
+  background: #333;
+}

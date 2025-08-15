@@ -1,0 +1,137 @@
+# QuantMind AI策略生成服务配置文件
+
+# 应用配置
+app:
+  name: "QuantMind AI Strategy Service"
+  version: "3.0.0"
+  description: "智能量化策略生成服务"
+  debug: false
+  host: "0.0.0.0"
+  port: 8005
+
+# 日志配置
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/ai_strategy.log"
+  max_file_size: "10MB"
+  backup_count: 5
+
+# LLM提供商配置
+llm_providers:
+  # 通义千问 - 主要推荐模型
+  qwen:
+    enabled: true
+    priority: 1  # 最高优先级
+    api_url: "https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation"
+    model: "qwen-turbo"
+    max_tokens: 4000
+    temperature: 0.7
+    timeout: 30
+    retry_attempts: 3
+    retry_delay: 1
+    description: "阿里云自研大模型，中文理解能力强，策略质量优秀"
+  
+  # Gemini - 备选模型
+  gemini:
+    enabled: true
+    priority: 2
+    api_url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+    model: "gemini-2.0-flash"
+    max_tokens: 4000
+    temperature: 0.7
+    timeout: 30
+    retry_attempts: 3
+    retry_delay: 1
+    description: "Google最新模型，多模态能力强"
+  
+  # OpenAI - 已禁用，由通义千问取代
+  openai:
+    enabled: false
+    priority: 3
+    api_url: "https://api.openai.com/v1/chat/completions"
+    model: "gpt-4"
+    max_tokens: 4000
+    temperature: 0.7
+    timeout: 30
+    retry_attempts: 3
+    retry_delay: 1
+    description: "OpenAI GPT-4模型（已禁用）"
+
+# 策略模板配置
+templates:
+  enabled: true
+  auto_load: true
+  custom_path: "templates/custom/"
+  cache_enabled: true
+  cache_ttl: 3600
+
+# 性能配置
+performance:
+  max_concurrent_requests: 10
+  request_timeout: 60
+  cache_enabled: true
+  cache_ttl: 3600
+  connection_pool_size: 20
+  max_retries: 3
+
+# 安全配置
+security:
+  rate_limit:
+    enabled: true
+    requests_per_minute: 60
+    burst_size: 10
+  api_key_validation: true
+  cors:
+    enabled: true
+    origins: ["*"]
+    methods: ["GET", "POST", "PUT", "DELETE"]
+    headers: ["*"]
+  request_size_limit: "10MB"
+
+# 数据库配置 (如需要)
+database:
+  enabled: false
+  url: "sqlite:///ai_strategy.db"
+  pool_size: 5
+  max_overflow: 10
+  pool_timeout: 30
+
+# 监控配置
+monitoring:
+  metrics_enabled: true
+  health_check_interval: 30
+  performance_tracking: true
+  error_tracking: true
+
+# PTrade语法配置
+ptrade:
+  enabled: true
+  strict_mode: true
+  validation_enabled: true
+  template_validation: true
+
+# 策略生成配置
+strategy_generation:
+  # 默认模型设置 - 通义千问为主要模型
+  default_models: ["qwen"]
+  primary_model: "qwen"  # 主要推荐模型
+  fallback_models: ["gemini"]  # 备选模型
+  parallel_generation: false  # 默认只使用主要模型
+  confidence_threshold: 0.6
+  auto_select_best: true
+  code_validation: true
+  # 模型优先级设置
+  model_priority:
+    qwen: 1
+    gemini: 2
+    openai: 3
+  parameter_extraction: true
+
+# 缓存配置
+cache:
+  enabled: true
+  backend: "memory"  # memory, redis
+  ttl: 3600
+  max_size: 1000
+  redis_url: "redis://localhost:6379/0"

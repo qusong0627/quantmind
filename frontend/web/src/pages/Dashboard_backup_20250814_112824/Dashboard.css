@@ -1,0 +1,446 @@
+/* 仪表盘布局样式 */
+.dashboard-layout {
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+.dashboard-content {
+  padding: 0;
+  margin: 0;
+  background: #f0f2f5;
+}
+
+/* 工具栏样式 */
+.dashboard-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.dashboard-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.last-update {
+  font-size: 12px;
+  color: #8c8c8c;
+  background: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.toolbar-right .ant-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.toolbar-right .ant-btn:hover {
+  background: #f5f5f5;
+  color: #1890ff;
+}
+
+.edit-mode-active {
+  background: #e6f7ff !important;
+  color: #1890ff !important;
+  border: 1px solid #91d5ff !important;
+}
+
+/* 仪表盘网格样式 */
+.dashboard-grid {
+  padding: 24px;
+  min-height: calc(100vh - 80px);
+}
+
+/* 组件容器样式 */
+.widget-container {
+  height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.widget-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.widget-container .ant-card {
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.widget-container .ant-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.widget-container .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  min-height: 48px;
+  padding: 0 16px;
+}
+
+.widget-container .ant-card-head-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.widget-container .ant-card-extra {
+  color: #8c8c8c;
+  font-size: 14px;
+}
+
+.widget-container .ant-card-body {
+  padding: 16px;
+  height: calc(100% - 48px);
+  overflow: auto;
+}
+
+/* 占位符组件样式 */
+.placeholder-widget {
+  background: #fafafa;
+  border: 2px dashed #d9d9d9;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.placeholder-widget:hover {
+  border-color: #40a9ff;
+  background: #f6ffed;
+  transform: none;
+  box-shadow: none;
+}
+
+.placeholder-content {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* 编辑模式样式 */
+.dashboard-grid.edit-mode .widget-container {
+  border: 2px dashed #1890ff;
+  background: rgba(24, 144, 255, 0.02);
+}
+
+.dashboard-grid.edit-mode .widget-container:hover {
+  border-color: #40a9ff;
+  background: rgba(24, 144, 255, 0.05);
+}
+
+/* 加载状态 */
+.dashboard-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f5f5f5;
+}
+
+.dashboard-loading .ant-spin {
+  color: #1890ff;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    padding: 16px;
+  }
+  
+  .widget-container {
+    height: 350px;
+  }
+  
+  .dashboard-title {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-toolbar {
+    padding: 12px 16px;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  
+  .toolbar-left {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .toolbar-right {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  
+  .dashboard-grid {
+    padding: 12px;
+  }
+  
+  .widget-container {
+    height: 300px;
+  }
+  
+  .dashboard-title {
+    font-size: 16px;
+  }
+  
+  .last-update {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-toolbar {
+    padding: 8px 12px;
+  }
+  
+  .toolbar-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .dashboard-grid {
+    padding: 8px;
+  }
+  
+  .widget-container {
+    height: 280px;
+  }
+  
+  .dashboard-title {
+    font-size: 14px;
+  }
+}
+
+/* 滚动条样式增强 */
+.widget-container .ant-card-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.widget-container .ant-card-body::-webkit-scrollbar-track {
+  background: #f5f5f5;
+  border-radius: 2px;
+}
+
+.widget-container .ant-card-body::-webkit-scrollbar-thumb {
+  background: #d9d9d9;
+  border-radius: 2px;
+}
+
+.widget-container .ant-card-body::-webkit-scrollbar-thumb:hover {
+  background: #bfbfbf;
+}
+
+/* 加载动画 */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.loading-pulse {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* 数据更新闪烁效果 */
+@keyframes flash {
+  0% {
+    background-color: transparent;
+  }
+  50% {
+    background-color: rgba(24, 144, 255, 0.1);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.data-flash {
+  animation: flash 0.5s ease-in-out;
+}
+
+/* 全屏模式样式 */
+.dashboard-layout:-webkit-full-screen {
+  background: #000;
+}
+
+.dashboard-layout:-webkit-full-screen .dashboard-content {
+  background: #f0f2f5;
+}
+
+.dashboard-layout:-webkit-full-screen .dashboard-toolbar {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+/* 深色主题支持 */
+@media (prefers-color-scheme: dark) {
+  .dashboard-layout {
+    background: #141414;
+  }
+  
+  .dashboard-content {
+    background: #141414;
+  }
+  
+  .dashboard-toolbar {
+    background: #1f1f1f;
+    border-bottom-color: #303030;
+  }
+  
+  .dashboard-title {
+    color: #fff;
+  }
+  
+  .last-update {
+    background: #262626;
+    color: #bfbfbf;
+  }
+  
+  .placeholder-widget {
+    background: #1f1f1f;
+    border-color: #434343;
+  }
+  
+  .placeholder-widget:hover {
+    background: #262626;
+    border-color: #1890ff;
+  }
+}
+
+/* 打印样式 */
+@media print {
+  .dashboard-toolbar {
+    display: none;
+  }
+  
+  .dashboard-grid {
+    padding: 0;
+  }
+  
+  .widget-container {
+    break-inside: avoid;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .widget-container:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+/* 编辑模式样式 */
+.dashboard-edit-mode {
+  background: #fafafa;
+}
+
+.dashboard-edit-mode .react-grid-item {
+  border: 2px dashed #1890ff;
+  background: rgba(24, 144, 255, 0.05);
+}
+
+.dashboard-edit-mode .react-grid-item:hover {
+  border-color: #40a9ff;
+  background: rgba(24, 144, 255, 0.1);
+}
+
+/* 网格布局样式 */
+.react-grid-layout {
+  position: relative;
+}
+
+.react-grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top, width, height;
+}
+
+.react-grid-item.cssTransforms {
+  transition-property: transform, width, height;
+}
+
+.react-grid-item > .react-resizable-handle {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  bottom: 0;
+  right: 0;
+  background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNiIgaGVpZ2h0PSI2IiB2aWV3Qm94PSIwIDAgNiA2IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZG90cyBmaWxsPSIjOTk5IiBkPSJtMTUgMTJjMCAuNTUyLS40NDggMS0xIDFzLTEtLjQ0OC0xLTEgLjQ0OC0xIDEtMSAxIC40NDggMSAxem0wIDRjMCAuNTUyLS40NDggMS0xIDFzLTEtLjQ0OC0xLTEgLjQ0OC0xIDEtMSAxIC40NDggMSAxem0wIDRjMCAuNTUyLS40NDggMS0xIDFzLTEtLjQ0OC0xLTEgLjQ0OC0xIDEtMSAxIC40NDggMSAxem0tNS00YzAtLjU1Mi40NDgtMSAxLTFzMSAuNDQ4IDEgMS0uNDQ4IDEtMSAxLTEtLjQ0OC0xLTF6bTAgNGMwLS41NTIuNDQ4LTEgMS0xczEgLjQ0OCAxIDEtLjQ0OCAxLTEgMS0xLS40NDgtMS0xem0wIDRjMC0uNTUyLjQ0OC0xIDEtMXMxIC40NDggMSAxLS40NDggMS0xIDEtMS0uNDQ4LTEtMXptNS0xMmMwLS41NTIuNDQ4LTEgMS0xczEgLjQ0OCAxIDEtLjQ0OCAxLTEgMS0xLS40NDgtMS0xem0wIDRjMC0uNTUyLjQ0OC0xIDEtMXMxIC40NDggMSAxLS40NDggMS0xIDEtMS0uNDQ4LTEtMXptMCA0YzAtLjU1Mi40NDgtMSAxLTFzMSAuNDQ4IDEgMS0uNDQ4IDEtMSAxLTEtLjQ0OC0xLTF6Ii8+Cjwvc3ZnPgo=');
+  background-position: bottom right;
+  padding: 0 3px 3px 0;
+  background-repeat: no-repeat;
+  background-origin: content-box;
+  box-sizing: border-box;
+  cursor: se-resize;
+}
+
+.react-grid-item.react-grid-placeholder {
+  background: rgba(24, 144, 255, 0.2);
+  opacity: 0.2;
+  transition-duration: 100ms;
+  z-index: 2;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+/* 滚动条样式 */
+.dashboard-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dashboard-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.dashboard-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.dashboard-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

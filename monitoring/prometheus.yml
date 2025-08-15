@@ -1,0 +1,71 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "alert_rules.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  # Prometheus自身监控
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # API网关监控
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['api-gateway:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # AI策略服务监控
+  - job_name: 'ai-strategy'
+    static_configs:
+      - targets: ['ai-strategy:8003']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # 数据服务监控
+  - job_name: 'data-service'
+    static_configs:
+      - targets: ['data-service:8005']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # 回测服务监控
+  - job_name: 'backtest'
+    static_configs:
+      - targets: ['backtest:8002']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # 用户服务监控
+  - job_name: 'user-service'
+    static_configs:
+      - targets: ['user-service:8001']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # MySQL监控
+  - job_name: 'mysql'
+    static_configs:
+      - targets: ['mysql:3306']
+    scrape_interval: 30s
+
+  # Redis监控
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    scrape_interval: 30s
+
+  # Node Exporter系统监控
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 15s 

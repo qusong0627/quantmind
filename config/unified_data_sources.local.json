@@ -1,0 +1,824 @@
+{
+  "_metadata": {
+    "name": "QuantMind 统一数据源配置",
+    "version": "2.0.0",
+    "description": "集中管理所有股票数据源的配置信息",
+    "last_updated": "2024-01-15",
+    "author": "QuantMind Team"
+  },
+  "_instructions": {
+    "setup": [
+      "1. 复制此文件为 unified_data_sources.local.json",
+      "2. 在本地文件中填入真实的API密钥",
+      "3. 或者通过环境变量设置API密钥（优先级更高）",
+      "4. 确保 unified_data_sources.local.json 已添加到 .gitignore"
+    ],
+    "priority": "数据源按priority字段排序，数字越小优先级越高",
+    "fallback": "当主数据源失败时，系统会自动切换到下一个可用数据源",
+    "environment_variables": "环境变量名在env_var字段中定义，优先级高于配置文件"
+  },
+  "data_sources": {
+    "tsanghi": {
+      "name": "沧海数据",
+      "description": "专业的全球金融数据API，提供股票、指数、外汇、加密货币等数据",
+      "type": "premium",
+      "priority": 1,
+      "status": "active",
+      "required": true,
+      "connection": {
+        "base_url": "https://www.tsanghi.com/api/fin",
+        "api_token": "your_tsanghi_api_token_here",
+        "env_var": "TSANGHI_API_TOKEN",
+        "timeout": 30,
+        "verify_ssl": true
+      },
+      "features": {
+        "real_time_data": true,
+        "historical_data": true,
+        "intraday_data": true,
+        "fundamental_data": true,
+        "technical_indicators": true,
+        "search_function": true,
+        "bulk_download": true
+      },
+      "markets": {
+        "cn": {
+          "name": "中国市场",
+          "exchanges": [
+            "XSHG",
+            "XSHE"
+          ],
+          "currencies": [
+            "CNY"
+          ],
+          "timezone": "Asia/Shanghai",
+          "trading_hours": "09:30-15:00"
+        },
+        "us": {
+          "name": "美国市场",
+          "exchanges": [
+            "XNAS",
+            "XNYS"
+          ],
+          "currencies": [
+            "USD"
+          ],
+          "timezone": "America/New_York",
+          "trading_hours": "09:30-16:00"
+        },
+        "hk": {
+          "name": "香港市场",
+          "exchanges": [
+            "XHKG"
+          ],
+          "currencies": [
+            "HKD"
+          ],
+          "timezone": "Asia/Hong_Kong",
+          "trading_hours": "09:30-16:00"
+        },
+        "crypto": {
+          "name": "加密货币",
+          "exchanges": [
+            "CRYPTO"
+          ],
+          "currencies": [
+            "USD",
+            "BTC",
+            "ETH"
+          ],
+          "timezone": "UTC",
+          "trading_hours": "24/7"
+        },
+        "forex": {
+          "name": "外汇市场",
+          "exchanges": [
+            "FOREX"
+          ],
+          "currencies": [
+            "USD",
+            "EUR",
+            "GBP",
+            "JPY"
+          ],
+          "timezone": "UTC",
+          "trading_hours": "24/5"
+        }
+      },
+      "rate_limits": {
+        "requests_per_minute": 60,
+        "requests_per_hour": 1000,
+        "requests_per_day": 10000,
+        "concurrent_requests": 10
+      },
+      "data_quality": "premium",
+      "update_frequency": "real_time",
+      "reliability_score": 0.99,
+      "cost_level": "high"
+    },
+    "ifind": {
+      "name": "同花顺iFinD",
+      "description": "同花顺专业金融数据接口，提供A股、港股、美股等数据",
+      "type": "professional",
+      "priority": 2,
+      "status": "active",
+      "required": false,
+      "connection": {
+        "base_url": "https://quantapi.51ifind.com",
+        "refresh_token": "eyJzaWduX3RpbWUiOiIyMDI1LTA4LTA2IDEzOjE3OjMyIn0=.eyJ1aWQiOiI3OTc3NzM4ODMiLCJ1c2VyIjp7ImFjY291bnQiOiJ6aGFpc29uZzAwMSIsImF1dGhVc2VySW5mbyI6eyJhcGlGb3JtYWwiOiIxIn0sImNvZGVDU0kiOltdLCJjb2RlWnpBdXRoIjpbXSwiaGFzQUlQcmVkaWN0IjpmYWxzZSwiaGFzQUlUYWxrIjpmYWxzZSwiaGFzQ0lDQyI6ZmFsc2UsImhhc0NTSSI6ZmFsc2UsImhhc0V2ZW50RHJpdmUiOmZhbHNlLCJoYXNGVFNFIjpmYWxzZSwiaGFzRmFzdCI6ZmFsc2UsImhhc0Z1bmRWYWx1YXRpb24iOmZhbHNlLCJoYXNISyI6dHJ1ZSwiaGFzTE1FIjpmYWxzZSwiaGFzTGV2ZWwyIjpmYWxzZSwiaGFzUmVhbENNRSI6ZmFsc2UsImhhc1RyYW5zZmVyIjpmYWxzZSwiaGFzVVMiOmZhbHNlLCJoYXNVU0FJbmRleCI6ZmFsc2UsImhhc1VTREVCVCI6ZmFsc2UsIm1hcmtldEF1dGgiOnsiRENFIjpmYWxzZX0sIm1heE9uTGluZSI6MSwibm9EaXNrIjpmYWxzZSwicHJvZHVjdFR5cGUiOiJTVVBFUkNPTU1BTkRQUk9EVUNUIiwicmVmcmVzaFRva2VuIjoiIiwicmVmcmVzaFRva2VuRXhwaXJlZFRpbWUiOiIyMDI1LTA5LTA1IDExOjIwOjQ2Iiwic2Vzc3Npb24iOiI5MzUzM2Y0NzdmNGNjZDA3YmNkZTJmN2M0ZTE0NTk3NiIsInNpZEluZm8iOnsxOiIxMDEiLDI6IjEiLDM6IjEiLDU6IjEiLDEwMjoiMSIsNjoiMSIsNzoiMTExMTExMTExMTEiLDg6IjAwMDAwMDAwMDAwMDAwMDAwMDAwMDAxIiw0NDoiMTEiLDU0OiIwMDAwMDAwMDAwMTEwMDAwMDEwMTAwMDAwMTAwMTAwMDAwMCIsODk6IjAwMDAwMDAwMDAwMDAxMTExMTEwMDAwMCIsOTA6IjAwMDAwMDAwMDAwMDAwMDAwMTExMDAwMDAwIiw2MjoiMDAwMDAwMDAwMDAwMDAwMDAwMDEwMDAwIn0sInRpbWVzdGFtcCI6IjE3NTQ0NTc0NTIxOTUiLCJ0cmFuc0F1dGgiOmZhbHNlLCJ0dGxWYWx1ZSI6MCwidWlkIjoiNzk3NzczODgzIiwidXNlclR5cGUiOiJPRkZJQ0lBTCIsIndpZmluZExpbWl0TWFwIjp7fX19.78F0690743854BA54A644A6E4271D18DFB0C70999A2C1053357C78E169C36DA1",
+        "env_var": "IFIND_REFRESH_TOKEN",
+        "timeout": 30,
+        "verify_ssl": true,
+        "auth_type": "refresh_token"
+      },
+      "features": {
+        "real_time_data": true,
+        "historical_data": true,
+        "intraday_data": true,
+        "fundamental_data": true,
+        "technical_indicators": true,
+        "search_function": true,
+        "bulk_download": false
+      },
+      "markets": {
+        "cn": {
+          "name": "中国市场",
+          "exchanges": [
+            "XSHG",
+            "XSHE"
+          ],
+          "currencies": [
+            "CNY"
+          ],
+          "timezone": "Asia/Shanghai",
+          "trading_hours": "09:30-15:00"
+        },
+        "us": {
+          "name": "美国市场",
+          "exchanges": [
+            "XNAS",
+            "XNYS"
+          ],
+          "currencies": [
+            "USD"
+          ],
+          "timezone": "America/New_York",
+          "trading_hours": "09:30-16:00"
+        },
+        "hk": {
+          "name": "香港市场",
+          "exchanges": [
+            "XHKG"
+          ],
+          "currencies": [
+            "HKD"
+          ],
+          "timezone": "Asia/Hong_Kong",
+          "trading_hours": "09:30-16:00"
+        }
+      },
+      "rate_limits": {
+        "requests_per_minute": 30,
+        "requests_per_hour": 500,
+        "requests_per_day": 5000,
+        "concurrent_requests": 5
+      },
+      "data_quality": "high",
+      "update_frequency": "real_time",
+      "reliability_score": 0.95,
+      "cost_level": "medium"
+    },
+    "juhe": {
+      "name": "聚合数据",
+      "description": "聚合数据API，提供股票基础数据和实时行情",
+      "type": "basic",
+      "priority": 3,
+      "status": "active",
+      "required": false,
+      "connection": {
+        "base_url": "http://web.juhe.cn",
+        "api_key": "your_juhe_api_key_here",
+        "env_var": "JUHE_API_KEY",
+        "timeout": 15,
+        "verify_ssl": false
+      },
+      "features": {
+        "real_time_data": true,
+        "historical_data": false,
+        "intraday_data": false,
+        "fundamental_data": false,
+        "technical_indicators": false,
+        "search_function": true,
+        "bulk_download": false
+      },
+      "markets": {
+        "cn": {
+          "name": "中国市场",
+          "exchanges": [
+            "XSHG",
+            "XSHE"
+          ],
+          "currencies": [
+            "CNY"
+          ],
+          "timezone": "Asia/Shanghai",
+          "trading_hours": "09:30-15:00"
+        },
+        "hk": {
+          "name": "香港市场",
+          "exchanges": [
+            "XHKG"
+          ],
+          "currencies": [
+            "HKD"
+          ],
+          "timezone": "Asia/Hong_Kong",
+          "trading_hours": "09:30-16:00"
+        },
+        "us": {
+          "name": "美国市场",
+          "exchanges": [
+            "XNAS",
+            "XNYS"
+          ],
+          "currencies": [
+            "USD"
+          ],
+          "timezone": "America/New_York",
+          "trading_hours": "09:30-16:00"
+        }
+      },
+      "rate_limits": {
+        "requests_per_minute": 100,
+        "requests_per_hour": 1000,
+        "requests_per_day": 10000,
+        "concurrent_requests": 10
+      },
+      "data_quality": "medium",
+      "update_frequency": "real_time",
+      "reliability_score": 0.85,
+      "cost_level": "low"
+    },
+    "alpha_vantage": {
+      "name": "Alpha Vantage",
+      "description": "Alpha Vantage API，提供美股等国际市场数据",
+      "type": "international",
+      "priority": 4,
+      "status": "active",
+      "required": false,
+      "connection": {
+        "base_url": "https://www.alphavantage.co/query",
+        "api_key": "your_alpha_vantage_api_key_here",
+        "env_var": "ALPHA_VANTAGE_API_KEY",
+        "timeout": 30,
+        "verify_ssl": true
+      },
+      "features": {
+        "real_time_data": true,
+        "historical_data": true,
+        "intraday_data": true,
+        "fundamental_data": true,
+        "technical_indicators": true,
+        "search_function": true,
+        "bulk_download": false
+      },
+      "markets": {
+        "us": {
+          "name": "美国市场",
+          "exchanges": [
+            "XNAS",
+            "XNYS"
+          ],
+          "currencies": [
+            "USD"
+          ],
+          "timezone": "America/New_York",
+          "trading_hours": "09:30-16:00"
+        },
+        "global": {
+          "name": "全球市场",
+          "exchanges": [
+            "XLON",
+            "XTKS",
+            "XFRA"
+          ],
+          "currencies": [
+            "GBP",
+            "JPY",
+            "EUR"
+          ],
+          "timezone": "UTC",
+          "trading_hours": "varies"
+        },
+        "crypto": {
+          "name": "加密货币",
+          "exchanges": [
+            "CRYPTO"
+          ],
+          "currencies": [
+            "USD",
+            "BTC"
+          ],
+          "timezone": "UTC",
+          "trading_hours": "24/7"
+        },
+        "forex": {
+          "name": "外汇市场",
+          "exchanges": [
+            "FOREX"
+          ],
+          "currencies": [
+            "USD",
+            "EUR",
+            "GBP"
+          ],
+          "timezone": "UTC",
+          "trading_hours": "24/5"
+        }
+      },
+      "rate_limits": {
+        "requests_per_minute": 5,
+        "requests_per_hour": 500,
+        "requests_per_day": 500,
+        "concurrent_requests": 1
+      },
+      "data_quality": "high",
+      "update_frequency": "real_time",
+      "reliability_score": 0.9,
+      "cost_level": "low"
+    },
+    "yahoo_finance": {
+      "name": "Yahoo Finance",
+      "description": "Yahoo Finance公开API，提供免费股票数据",
+      "type": "public",
+      "priority": 5,
+      "status": "active",
+      "required": false,
+      "connection": {
+        "base_url": "https://query1.finance.yahoo.com",
+        "api_key": null,
+        "env_var": null,
+        "timeout": 15,
+        "verify_ssl": true,
+        "auth_type": "none"
+      },
+      "features": {
+        "real_time_data": true,
+        "historical_data": true,
+        "intraday_data": true,
+        "fundamental_data": true,
+        "technical_indicators": false,
+        "search_function": true,
+        "bulk_download": false
+      },
+      "markets": {
+        "global": {
+          "name": "全球市场",
+          "exchanges": [
+            "XNAS",
+            "XNYS",
+            "XLON",
+            "XTKS",
+            "XFRA",
+            "XHKG",
+            "XSHG",
+            "XSHE"
+          ],
+          "currencies": [
+            "USD",
+            "EUR",
+            "GBP",
+            "JPY",
+            "HKD",
+            "CNY"
+          ],
+          "timezone": "UTC",
+          "trading_hours": "varies"
+        }
+      },
+      "rate_limits": {
+        "requests_per_minute": 100,
+        "requests_per_hour": 1000,
+        "requests_per_day": 10000,
+        "concurrent_requests": 10
+      },
+      "data_quality": "medium",
+      "update_frequency": "real_time",
+      "reliability_score": 0.8,
+      "cost_level": "free"
+    },
+    "akshare": {
+      "name": "AkShare",
+      "description": "开源Python库，提供中国股市数据",
+      "type": "opensource",
+      "priority": 6,
+      "status": "active",
+      "required": false,
+      "connection": {
+        "base_url": "local://akshare",
+        "api_key": null,
+        "env_var": null,
+        "timeout": 30,
+        "verify_ssl": false,
+        "auth_type": "none"
+      },
+      "features": {
+        "real_time_data": true,
+        "historical_data": true,
+        "intraday_data": true,
+        "fundamental_data": true,
+        "technical_indicators": false,
+        "search_function": true,
+        "bulk_download": true
+      },
+      "markets": {
+        "cn": {
+          "name": "中国市场",
+          "exchanges": [
+            "XSHG",
+            "XSHE"
+          ],
+          "currencies": [
+            "CNY"
+          ],
+          "timezone": "Asia/Shanghai",
+          "trading_hours": "09:30-15:00"
+        }
+      },
+      "rate_limits": {
+        "requests_per_minute": 60,
+        "requests_per_hour": 1000,
+        "requests_per_day": 10000,
+        "concurrent_requests": 5
+      },
+      "data_quality": "medium",
+      "update_frequency": "real_time",
+      "reliability_score": 0.75,
+      "cost_level": "free"
+    },
+    "baostock": {
+      "name": "Baostock",
+      "description": "开源Python库，提供中国股市历史数据",
+      "type": "opensource",
+      "priority": 7,
+      "status": "active",
+      "required": false,
+      "connection": {
+        "base_url": "local://baostock",
+        "api_key": null,
+        "env_var": null,
+        "timeout": 30,
+        "verify_ssl": false,
+        "auth_type": "login"
+      },
+      "features": {
+        "real_time_data": false,
+        "historical_data": true,
+        "intraday_data": true,
+        "fundamental_data": true,
+        "technical_indicators": false,
+        "search_function": false,
+        "bulk_download": true
+      },
+      "markets": {
+        "cn": {
+          "name": "中国市场",
+          "exchanges": [
+            "XSHG",
+            "XSHE"
+          ],
+          "currencies": [
+            "CNY"
+          ],
+          "timezone": "Asia/Shanghai",
+          "trading_hours": "09:30-15:00"
+        }
+      },
+      "rate_limits": {
+        "requests_per_minute": 60,
+        "requests_per_hour": 2000,
+        "requests_per_day": 20000,
+        "concurrent_requests": 3
+      },
+      "data_quality": "high",
+      "update_frequency": "daily",
+      "reliability_score": 0.85,
+      "cost_level": "free"
+    },
+    "tencent_finance": {
+      "name": "腾讯财经",
+      "description": "腾讯财经免费API，提供中国股票指数实时数据",
+      "type": "free",
+      "priority": 3,
+      "status": "active",
+      "required": false,
+      
+      "connection": {
+        "base_url": "https://qt.gtimg.cn/q=",
+        "api_key": null,
+        "env_var": null,
+        "timeout": 10,
+        "verify_ssl": true,
+        "auth_type": "none"
+      },
+      
+      "features": {
+        "real_time_data": true,
+        "historical_data": false,
+        "intraday_data": false,
+        "fundamental_data": false,
+        "technical_indicators": false,
+        "search_function": false,
+        "bulk_download": true,
+        "index_data": true
+      },
+      
+      "markets": {
+        "cn": {
+          "name": "中国市场",
+          "exchanges": ["XSHG", "XSHE"],
+          "currencies": ["CNY"],
+          "timezone": "Asia/Shanghai",
+          "trading_hours": "09:30-15:00",
+          "supported_indices": [
+            "sh000001",
+            "sh000016", 
+            "sh000300",
+            "sz399001",
+            "sz399006",
+            "sz399905",
+            "sz399300",
+            "sz399102",
+            "sz399005"
+          ]
+        }
+      },
+      
+      "rate_limits": {
+        "requests_per_minute": 60,
+        "requests_per_hour": 3600,
+        "requests_per_day": 50000,
+        "concurrent_requests": 10
+      },
+      
+      "data_quality": "good",
+      "update_frequency": "real_time",
+      "reliability_score": 0.95,
+      "cost_level": "free",
+      
+      "api_endpoints": {
+        "single_index": "https://qt.gtimg.cn/q=s_{symbol}",
+        "batch_indices": "https://qt.gtimg.cn/q={symbols}",
+        "data_format": "javascript_variable",
+        "response_encoding": "utf-8"
+      },
+      
+      "data_fields": {
+        "market_id": "市场标识 (1=上海, 0=深圳)",
+        "name": "指数名称",
+        "code": "指数代码",
+        "current_price": "当前点位",
+        "change_points": "涨跌点数",
+        "change_percent": "涨跌幅百分比",
+        "volume": "成交量(手)",
+        "amount": "成交金额(万元)",
+        "market_cap": "总市值(亿元)",
+        "type": "证券类型(ZS=指数)"
+      }
+    },
+
+    "mock": {
+      "name": "模拟数据服务",
+      "description": "用于开发和测试的模拟数据服务",
+      "type": "development",
+      "priority": 999,
+      "status": "active",
+      "required": false,
+      "connection": {
+        "base_url": "mock://localhost",
+        "api_key": null,
+        "env_var": null,
+        "timeout": 1,
+        "verify_ssl": false,
+        "auth_type": "none"
+      },
+      "features": {
+        "real_time_data": true,
+        "historical_data": true,
+        "intraday_data": true,
+        "fundamental_data": true,
+        "technical_indicators": true,
+        "search_function": true,
+        "bulk_download": true
+      },
+      "markets": {
+        "mock": {
+          "name": "模拟市场",
+          "exchanges": [
+            "MOCK"
+          ],
+          "currencies": [
+            "USD"
+          ],
+          "timezone": "UTC",
+          "trading_hours": "24/7"
+        }
+      },
+      "rate_limits": {
+        "requests_per_minute": 1000,
+        "requests_per_hour": 10000,
+        "requests_per_day": 100000,
+        "concurrent_requests": 100
+      },
+      "data_quality": "simulated",
+      "update_frequency": "simulated",
+      "reliability_score": 1.0,
+      "cost_level": "free"
+    }
+  },
+  "ai_services": {
+    "openai": {
+      "name": "OpenAI GPT",
+      "description": "OpenAI API，用于AI策略生成",
+      "type": "ai_service",
+      "priority": 1,
+      "status": "active",
+      "required": false,
+      "connection": {
+        "base_url": "https://api.openai.com/v1",
+        "api_key": "your_openai_api_key_here",
+        "env_var": "OPENAI_API_KEY",
+        "timeout": 60,
+        "verify_ssl": true
+      },
+      "models": [
+        "gpt-4",
+        "gpt-3.5-turbo"
+      ],
+      "rate_limits": {
+        "requests_per_minute": 60,
+        "tokens_per_minute": 90000
+      },
+      "cost_level": "high"
+    },
+    "qwen": {
+      "name": "通义千问",
+      "description": "阿里云通义千问API，用于多模型AI策略生成",
+      "type": "ai_service",
+      "priority": 2,
+      "status": "active",
+      "required": false,
+      "connection": {
+        "base_url": "https://dashscope.aliyuncs.com/api/v1",
+        "api_key": "your_qwen_api_key_here",
+        "env_var": "QWEN_API_KEY",
+        "timeout": 60,
+        "verify_ssl": true
+      },
+      "models": [
+        "qwen-turbo",
+        "qwen-plus"
+      ],
+      "rate_limits": {
+        "requests_per_minute": 60,
+        "tokens_per_minute": 120000
+      },
+      "cost_level": "medium"
+    },
+    "gemini": {
+      "name": "Google Gemini",
+      "description": "Google Gemini API，用于多模型AI策略生成",
+      "type": "ai_service",
+      "priority": 3,
+      "status": "active",
+      "required": false,
+      "connection": {
+        "base_url": "https://generativelanguage.googleapis.com/v1",
+        "api_key": "your_gemini_api_key_here",
+        "env_var": "GEMINI_API_KEY",
+        "timeout": 60,
+        "verify_ssl": true
+      },
+      "models": [
+        "gemini-pro"
+      ],
+      "rate_limits": {
+        "requests_per_minute": 60,
+        "tokens_per_minute": 100000
+      },
+      "cost_level": "low"
+    }
+  },
+  "databases": {
+    "mysql": {
+      "name": "MySQL数据库",
+      "description": "主数据库，存储用户数据和交易记录",
+      "type": "relational",
+      "priority": 1,
+      "status": "optional",
+      "connection": {
+        "host": "localhost",
+        "port": 3306,
+        "database": "quantmind",
+        "username": "quantmind_user",
+        "password": "your_mysql_password_here",
+        "env_vars": {
+          "host": "MYSQL_HOST",
+          "port": "MYSQL_PORT",
+          "database": "MYSQL_DATABASE",
+          "username": "MYSQL_USERNAME",
+          "password": "MYSQL_PASSWORD"
+        }
+      }
+    },
+    "redis": {
+      "name": "Redis缓存",
+      "description": "缓存数据库，存储热点数据和会话信息",
+      "type": "cache",
+      "priority": 1,
+      "status": "optional",
+      "connection": {
+        "host": "localhost",
+        "port": 6379,
+        "database": 0,
+        "password": "your_redis_password_here",
+        "env_vars": {
+          "host": "REDIS_HOST",
+          "port": "REDIS_PORT",
+          "password": "REDIS_PASSWORD"
+        }
+      }
+    },
+    "sqlite": {
+      "name": "SQLite数据库",
+      "description": "轻量级本地数据库，用于开发和测试",
+      "type": "local",
+      "priority": 2,
+      "status": "active",
+      "connection": {
+        "path": "data/quantmind.db",
+        "env_var": "SQLITE_PATH"
+      }
+    },
+    "influxdb": {
+      "name": "InfluxDB时序数据库",
+      "description": "时序数据库，存储股票历史数据",
+      "type": "timeseries",
+      "priority": 1,
+      "status": "optional",
+      "connection": {
+        "url": "http://localhost:8086",
+        "token": "your_influxdb_token_here",
+        "org": "quantmind",
+        "bucket": "market_data",
+        "env_vars": {
+          "url": "INFLUXDB_URL",
+          "token": "INFLUXDB_TOKEN",
+          "org": "INFLUXDB_ORG",
+          "bucket": "INFLUXDB_BUCKET"
+        }
+      }
+    }
+  },
+  "system_config": {
+    "data_source_manager": {
+      "strategy": "priority_based",
+      "fallback_enabled": true,
+      "health_check_interval": 300,
+      "max_consecutive_failures": 3,
+      "recovery_check_interval": 300,
+      "timeout": 30,
+      "retry_count": 3,
+      "cache_enabled": true,
+      "cache_ttl": 300
+    },
+    "security": {
+      "jwt_secret": "your-jwt-secret-key-change-in-production",
+      "jwt_expiry": 3600,
+      "env_var": "SECRET_KEY"
+    },
+    "logging": {
+      "level": "INFO",
+      "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+      "file": "logs/quantmind.log",
+      "max_size": "10MB",
+      "backup_count": 5
+    }
+  },
+  "validation_rules": {
+    "required_for_production": [
+      "tsanghi.connection.api_token",
+      "system_config.security.jwt_secret"
+    ],
+    "recommended_for_production": [
+      "ifind.connection.refresh_token",
+      "databases.mysql.connection.password",
+      "databases.redis.connection.password"
+    ],
+    "data_source_priorities": {
+      "min": 1,
+      "max": 999,
+      "description": "数字越小优先级越高"
+    }
+  }
+}

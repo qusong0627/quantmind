@@ -1,0 +1,2 @@
+-r ../../shared/requirements/base.txt
+-r ../../shared/requirements/api.txt

@@ -1,0 +1,112 @@
+services:
+  # Prometheus监控
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: quantmind-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--storage.tsdb.retention.time=200h'
+      - '--web.enable-lifecycle'
+    networks:
+      - quantmind-network
+
+  # Grafana可视化
+  grafana:
+    image: grafana/grafana:latest
+    container_name: quantmind-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources
+    networks:
+      - quantmind-network
+
+  # Jaeger分布式追踪
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: quantmind-jaeger
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - quantmind-network
+
+  # Elasticsearch日志存储
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    container_name: quantmind-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - quantmind-network
+
+  # Kibana日志可视化
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.17.0
+    container_name: quantmind-kibana
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    depends_on:
+      - elasticsearch
+    networks:
+      - quantmind-network
+
+  # Fluentd日志收集
+  fluentd:
+    image: fluent/fluentd-kubernetes-daemonset:v1.14-debian-elasticsearch7-1
+    container_name: quantmind-fluentd
+    volumes:
+      - ./monitoring/fluentd/fluent.conf:/fluentd/etc/fluent.conf
+      - ./logs:/var/log/quantmind
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
+    networks:
+      - quantmind-network
+
+  # Nginx负载均衡
+  nginx:
+    image: nginx:alpine
+    container_name: quantmind-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./monitoring/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./monitoring/nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - api-gateway
+      - web-frontend
+    networks:
+      - quantmind-network
+
+volumes:
+  prometheus_data:
+  grafana_data:
+  elasticsearch_data:
+
+networks:
+  quantmind-network:
+    driver: bridge

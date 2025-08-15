@@ -1,0 +1,552 @@
+.community-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.community-content {
+  padding: 0;
+  background: transparent;
+}
+
+/* 页面头部 */
+.community-header {
+  background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+  color: #262626;
+  padding: 40px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  margin: 0 24px 24px 24px;
+}
+
+.header-title h1 {
+  color: #262626;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  text-shadow: none;
+}
+
+.header-title p {
+  color: #8c8c8c;
+  font-size: 16px;
+  margin: 0;
+  opacity: 1;
+}
+
+.header-actions .ant-btn {
+  height: 44px;
+  padding: 0 24px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: none;
+}
+
+.header-actions .ant-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* 标签页 */
+.community-tabs {
+  background: white;
+  margin: 0 24px 24px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.community-tabs .ant-tabs-nav {
+  margin: 0;
+  padding: 0 24px;
+  background: white;
+}
+
+.community-tabs .ant-tabs-tab {
+  padding: 16px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #666;
+  border: none;
+  margin: 0;
+  position: relative;
+}
+
+.community-tabs .ant-tabs-tab:hover {
+  color: #1890ff;
+}
+
+.community-tabs .ant-tabs-tab-active {
+  color: #1890ff;
+  font-weight: 600;
+}
+
+.community-tabs .ant-tabs-tab-active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 3px;
+  background: #1890ff;
+  border-radius: 2px;
+}
+
+.community-tabs .ant-tabs-ink-bar {
+  display: none;
+}
+
+.community-tabs .ant-tabs-content-holder {
+  padding: 0;
+}
+
+/* 搜索和过滤栏 */
+.community-filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 24px 24px 24px;
+  padding: 20px 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.filter-left {
+  flex: 1;
+}
+
+.filter-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.community-filters .ant-input-search {
+  border-radius: 8px;
+}
+
+.community-filters .ant-input-search .ant-input {
+  border-radius: 8px 0 0 8px;
+  border-right: none;
+}
+
+.community-filters .ant-input-search .ant-input-search-button {
+  border-radius: 0 8px 8px 0;
+  background: #1890ff;
+  border-color: #1890ff;
+}
+
+.community-filters .ant-select {
+  border-radius: 8px;
+}
+
+.community-filters .ant-select .ant-select-selector {
+  border-radius: 8px;
+  border-color: #d9d9d9;
+}
+
+/* 主内容区域 */
+.community-main {
+  margin: 0 24px;
+  min-height: 400px;
+}
+
+.community-main .ant-spin-container {
+  min-height: 400px;
+}
+
+/* 即将推出 */
+.coming-soon {
+  text-align: center;
+  padding: 80px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.coming-soon h3 {
+  font-size: 24px;
+  color: #262626;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.coming-soon p {
+  font-size: 16px;
+  color: #8c8c8c;
+  margin: 0;
+}
+
+/* 分页 */
+.community-pagination {
+  display: flex;
+  justify-content: center;
+  margin: 40px 24px 24px 24px;
+  padding: 24px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.community-pagination .ant-pagination {
+  display: flex;
+  align-items: center;
+}
+
+.community-pagination .ant-pagination-item {
+  border-radius: 6px;
+  border-color: #d9d9d9;
+}
+
+.community-pagination .ant-pagination-item-active {
+  background: #1890ff;
+  border-color: #1890ff;
+}
+
+.community-pagination .ant-pagination-item-active a {
+  color: white;
+}
+
+.community-pagination .ant-pagination-prev,
+.community-pagination .ant-pagination-next {
+  border-radius: 6px;
+}
+
+.community-pagination .ant-pagination-jump-prev,
+.community-pagination .ant-pagination-jump-next {
+  border-radius: 6px;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .community-main {
+    margin: 0 16px;
+  }
+  
+  .community-filters {
+    margin: 0 16px 24px 16px;
+  }
+  
+  .community-tabs {
+    margin: 0 16px 24px 16px;
+  }
+  
+  .community-pagination {
+    margin: 40px 16px 24px 16px;
+  }
+}
+
+/* 个人中心模块样式 */
+.personal-center-section {
+  margin-top: 40px;
+  padding: 0 24px;
+}
+
+.personal-center-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0f0f0;
+}
+
+.personal-center-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+  border-radius: 12px 12px 0 0;
+}
+
+.personal-center-card .ant-card-head-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.personal-center-content {
+  padding: 20px 0;
+}
+
+/* 用户信息卡片 */
+.user-info-card {
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+
+.user-basic-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.user-details {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.user-name-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.user-name-section h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.user-email {
+  color: #8c8c8c;
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.user-level {
+  color: #1890ff;
+  margin: 4px 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.user-bio {
+  color: #595959;
+  margin: 8px 0 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* 统计数据卡片 */
+.stats-card {
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+
+.stats-card .ant-statistic-title {
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+.stats-card .ant-statistic-content {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* 我的策略卡片 */
+.my-strategies-card {
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+
+.strategy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.strategy-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+}
+
+.strategy-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.strategy-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #262626;
+}
+
+.strategy-return {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.strategy-return.positive {
+  color: #52c41a;
+}
+
+.strategy-return.negative {
+  color: #ff4d4f;
+}
+
+@media (max-width: 768px) {
+  .community-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+    padding: 32px 16px;
+  }
+  
+  .header-title h1 {
+    font-size: 28px;
+  }
+  
+  .header-title p {
+    font-size: 14px;
+  }
+  
+  .community-filters {
+    flex-direction: column;
+    gap: 16px;
+    align-items: stretch;
+  }
+  
+  .filter-left {
+    flex: none;
+  }
+  
+  .filter-right {
+    justify-content: center;
+  }
+  
+  .community-filters .ant-input-search {
+    width: 100%;
+  }
+  
+  .community-tabs .ant-tabs-nav {
+    padding: 0 16px;
+  }
+  
+  .community-tabs .ant-tabs-tab {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+  
+  .community-main {
+    margin: 0 8px;
+  }
+  
+  .community-filters {
+    margin: 0 8px 16px 8px;
+    padding: 16px;
+  }
+  
+  .community-tabs {
+    margin: 0 8px 16px 8px;
+  }
+  
+  .community-pagination {
+    margin: 24px 8px 16px 8px;
+    padding: 16px;
+  }
+  
+  .personal-center-section {
+    padding: 0 16px;
+    margin-top: 24px;
+  }
+  
+  .personal-center-content .ant-row {
+    gap: 16px;
+  }
+  
+  .user-basic-info {
+    flex-direction: row;
+    text-align: left;
+  }
+  
+  .user-details {
+    margin-top: 0;
+    margin-left: 16px;
+  }
+  
+  .user-name-section {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .header-actions .ant-btn {
+    width: 100%;
+    max-width: 200px;
+  }
+  
+  .filter-right {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .filter-right .ant-select {
+    width: 100%;
+  }
+  
+  .community-tabs .ant-tabs-nav {
+    padding: 0 8px;
+  }
+  
+  .community-tabs .ant-tabs-tab {
+    padding: 12px 8px;
+    font-size: 13px;
+  }
+}
+
+/* 加载状态 */
+.community-main .ant-spin {
+  max-height: none;
+}
+
+.community-main .ant-spin-spinning {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 动画效果 */
+.community-page {
+  animation: fadeIn 0.6s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 卡片网格动画 */
+.ant-col {
+  animation: slideUp 0.6s ease;
+}
+
+.ant-col:nth-child(1) { animation-delay: 0.1s; }
+.ant-col:nth-child(2) { animation-delay: 0.2s; }
+.ant-col:nth-child(3) { animation-delay: 0.3s; }
+.ant-col:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 深色模式支持已移除，保持浅色主题 */

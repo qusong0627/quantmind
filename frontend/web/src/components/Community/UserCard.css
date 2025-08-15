@@ -1,0 +1,374 @@
+.user-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #f0f0f0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+}
+
+.user-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  border-color: #1890ff;
+}
+
+.user-card .ant-card-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* 用户头部 */
+.user-header {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.avatar-section {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.user-avatar {
+  border: 3px solid #f0f0f0;
+  transition: all 0.3s ease;
+}
+
+.user-card:hover .user-avatar {
+  border-color: #1890ff;
+}
+
+.online-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
+  background: #52c41a;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  animation: pulse-online 2s infinite;
+}
+
+@keyframes pulse-online {
+  0% {
+    box-shadow: 0 0 0 0 rgba(82, 196, 26, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(82, 196, 26, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(82, 196, 26, 0);
+  }
+}
+
+.user-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.user-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-name .anticon {
+  color: #faad14;
+  font-size: 14px;
+}
+
+.user-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.level-tag {
+  margin: 0;
+  font-size: 11px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.join-time {
+  color: #bfbfbf;
+  font-size: 11px;
+}
+
+.user-bio {
+  color: #8c8c8c;
+  font-size: 12px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 用户统计 */
+.user-stats {
+  margin-bottom: 16px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #262626;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #8c8c8c;
+  font-weight: 500;
+}
+
+/* 最近活动 */
+.recent-activity {
+  margin-bottom: 16px;
+}
+
+.activity-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #595959;
+  margin-bottom: 8px;
+}
+
+.recent-strategies {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.recent-strategy {
+  padding: 6px 8px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+}
+
+.strategy-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: #262626;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.strategy-stats {
+  display: flex;
+  gap: 8px;
+}
+
+.strategy-stats .stat {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 10px;
+  color: #8c8c8c;
+}
+
+.strategy-stats .stat .anticon {
+  font-size: 10px;
+}
+
+/* 操作按钮 */
+.user-actions {
+  margin-top: auto;
+}
+
+.user-actions .ant-btn {
+  border-radius: 6px;
+  font-size: 12px;
+  height: 28px;
+  font-weight: 500;
+}
+
+.follow-btn {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  border: none;
+}
+
+.follow-btn:hover {
+  background: linear-gradient(135deg, #40a9ff 0%, #1890ff 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
+}
+
+.unfollow-btn {
+  border-color: #d9d9d9;
+  color: #8c8c8c;
+}
+
+.unfollow-btn:hover {
+  border-color: #ff4d4f;
+  color: #ff4d4f;
+  background: #fff2f0;
+}
+
+/* 当前用户标识 */
+.current-user-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.current-user-badge .ant-tag {
+  margin: 0;
+  font-size: 10px;
+  border-radius: 4px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .user-card .ant-card-body {
+    padding: 12px;
+  }
+  
+  .user-header {
+    gap: 8px;
+  }
+  
+  .user-avatar {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  
+  .user-name {
+    font-size: 14px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    padding: 8px;
+  }
+  
+  .stat-value {
+    font-size: 14px;
+  }
+  
+  .user-actions .ant-space {
+    flex-direction: column;
+  }
+  
+  .user-actions .ant-btn {
+    width: 100%;
+  }
+}
+
+/* 加载状态 */
+.user-card.loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.user-card.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 动画效果 */
+@keyframes bounce {
+  0%, 20%, 53%, 80%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  40%, 43% {
+    transform: translate3d(0, -8px, 0);
+  }
+  70% {
+    transform: translate3d(0, -4px, 0);
+  }
+  90% {
+    transform: translate3d(0, -2px, 0);
+  }
+}
+
+.user-actions .ant-btn:active {
+  animation: bounce 0.6s ease;
+}
+
+/* 特殊用户标识 */
+.user-card.expert-user {
+  background: linear-gradient(135deg, #fff7e6 0%, #fff2e6 100%);
+  border-color: #faad14;
+}
+
+.user-card.expert-user:hover {
+  border-color: #fa8c16;
+  box-shadow: 0 12px 32px rgba(250, 173, 20, 0.2);
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .user-card {
+    background: #1f1f1f;
+    border-color: #303030;
+  }
+  
+  .user-name {
+    color: #ffffff;
+  }
+  
+  .user-bio {
+    color: #bfbfbf;
+  }
+  
+  .stat-value {
+    color: #ffffff;
+  }
+  
+  .stats-grid {
+    background: #262626;
+    border-color: #303030;
+  }
+  
+  .recent-strategy {
+    background: #262626;
+    border-color: #303030;
+  }
+  
+  .strategy-name {
+    color: #ffffff;
+  }
+}

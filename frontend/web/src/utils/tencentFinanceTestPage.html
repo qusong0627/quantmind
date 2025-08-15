@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>腾讯财经数据源测试工具</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #555;
+        }
+        button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #005a87;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            border-left: 4px solid #007cba;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        .log-pass {
+            background: #d4edda;
+            color: #155724;
+            border-left: 3px solid #28a745;
+        }
+        .log-fail {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 3px solid #dc3545;
+        }
+        .log-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 3px solid #17a2b8;
+        }
+        .progress {
+            width: 100%;
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        .progress-bar {
+            height: 100%;
+            background: #007cba;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .summary-card {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+            min-width: 120px;
+        }
+        .summary-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007cba;
+        }
+        .summary-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .data-table th,
+        .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .data-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        .trend-up {
+            color: #dc3545;
+        }
+        .trend-down {
+            color: #28a745;
+        }
+        .trend-flat {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 腾讯财经数据源测试工具</h1>
+        
+        <div class="test-section">
+            <h3>快速测试</h3>
+            <p>快速检查腾讯财经API的连通性</p>
+            <button onclick="runQuickTest()">快速连通性测试</button>
+            <button onclick="runFullTest()">完整测试套件</button>
+            <button onclick="clearResults()">清空结果</button>
+        </div>
+        
+        <div class="test-section">
+            <h3>单项测试</h3>
+            <p>测试特定功能模块</p>
+            <button onclick="testDirectAPI()">直接API调用</button>
+            <button onclick="testBatchAPI()">批量API调用</button>
+            <button onclick="testBackendProxy()">后端代理接口</button>
+            <button onclick="testDataParsing()">数据解析功能</button>
+        </div>
+        
+        <div class="progress" id="progressContainer" style="display: none;">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="results" id="results" style="display: none;">
+            <h3>测试结果</h3>
+            <div id="summary" style="display: none;"></div>
+            <div id="logContainer"></div>
+            <div id="dataContainer"></div>
+        </div>
+    </div>
+
+    <script>
+        // 腾讯财经API配置
+        const TENCENT_API_BASE = 'https://qt.gtimg.cn/q=';
+        
+        // 测试用的主要指数配置
+        const TEST_INDICES = {
+            'sh000001': { name: '上证指数', market: '上海' },
+            'sz399001': { name: '深证成指', market: '深圳' },
+            'sz399006': { name: '创业板指', market: '深圳' },
+            'sh000300': { name: '沪深300', market: '上海' }
+        };
+        
+        let testResults = [];
+        let currentTest = 0;
+        let totalTests = 0;
+        
+        // 显示结果区域
+        function showResults() {
+            document.getElementById('results').style.display = 'block';
+        }
+        
+        // 清空结果
+        function clearResults() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('logContainer').innerHTML = '';
+            document.getElementById('dataContainer').innerHTML = '';
+            document.getElementById('summary').style.display = 'none';
+            document.getElementById('progressContainer').style.display = 'none';
+            testResults = [];
+            currentTest = 0;
+            totalTests = 0;
+        }
+        
+        // 更新进度条
+        function updateProgress() {
+            if (totalTests > 0) {
+                const progress = (currentTest / totalTests) * 100;
+                document.getElementById('progressBar').style.width = progress + '%';
+            }
+        }
+        
+        // 记录测试结果
+        function logTestResult(testName, success, message, duration = 0, data = null) {
+            const result = {
+                testName,
+                success,
+                message,
+                duration,
+                data,
+                timestamp: new Date().toISOString()
+            };
+            testResults.push(result);
+            
+            const logContainer = document.getElementById('logContainer');
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry ${success ? 'log-pass' : 'log-fail'}`;
+            
+            const status = success ? '✅ PASS' : '❌ FAIL';
+            logEntry.innerHTML = `${status} [${testName}] ${message} (${duration}ms)`;
+            
+            logContainer.appendChild(logEntry);
+            
+            // 如果有数据，显示数据表格
+            if (data && typeof data === 'object' && Object.keys(data).length > 0) {
+                displayData(testName, data);
+            }
+            
+            currentTest++;
+            updateProgress();
+        }
+        
+        // 显示数据表格
+        function displayData(testName, data) {
+            const dataContainer = document.getElementById('dataContainer');
+            
+            const dataSection = document.createElement('div');
+            dataSection.innerHTML = `<h4>${testName} - 数据详情</h4>`;
+            
+            if (Array.isArray(data) || (typeof data === 'object' && Object.keys(data).length > 0)) {
+                const table = document.createElement('table');
+                table.className = 'data-table';
+                
+                // 如果是指数数据对象
+                if (typeof data === 'object' && !Array.isArray(data)) {
+                    const firstKey = Object.keys(data)[0];
+                    if (data[firstKey] && typeof data[firstKey] === 'object') {
+                        // 创建表头
+                        const thead = document.createElement('thead');
+                        const headerRow = document.createElement('tr');
+                        ['指数代码', '名称', '当前价格', '涨跌点数', '涨跌幅(%)', '成交量', '趋势'].forEach(header => {
+                            const th = document.createElement('th');
+                            th.textContent = header;
+                            headerRow.appendChild(th);
+                        });
+                        thead.appendChild(headerRow);
+                        table.appendChild(thead);
+                        
+                        // 创建表体
+                        const tbody = document.createElement('tbody');
+                        Object.entries(data).forEach(([symbol, indexData]) => {
+                            const row = document.createElement('tr');
+                            
+                            const cells = [
+                                symbol,
+                                indexData.name || '-',
+                                indexData.current_price ? indexData.current_price.toFixed(2) : '-',
+                                indexData.change_points ? indexData.change_points.toFixed(2) : '-',
+                                indexData.change_percent ? indexData.change_percent.toFixed(2) : '-',
+                                indexData.volume || '-',
+                                indexData.trend || '-'
+                            ];
+                            
+                            cells.forEach((cellData, index) => {
+                                const td = document.createElement('td');
+                                td.textContent = cellData;
+                                
+                                // 为趋势列添加颜色
+                                if (index === 6) {
+                                    if (cellData === 'up') {
+                                        td.className = 'trend-up';
+                                        td.textContent = '↗ 上涨';
+                                    } else if (cellData === 'down') {
+                                        td.className = 'trend-down';
+                                        td.textContent = '↘ 下跌';
+                                    } else if (cellData === 'flat') {
+                                        td.className = 'trend-flat';
+                                        td.textContent = '→ 平盘';
+                                    }
+                                }
+                                
+                                row.appendChild(td);
+                            });
+                            
+                            tbody.appendChild(row);
+                        });
+                        table.appendChild(tbody);
+                    }
+                }
+                
+                dataSection.appendChild(table);
+            } else {
+                const pre = document.createElement('pre');
+                pre.textContent = JSON.stringify(data, null, 2);
+                dataSection.appendChild(pre);
+            }
+            
+            dataContainer.appendChild(dataSection);
+        }
+        
+        // 显示测试摘要
+        function showSummary() {
+            const totalTests = testResults.length;
+            const passedTests = testResults.filter(r => r.success).length;
+            const failedTests = totalTests - passedTests;
+            const successRate = totalTests > 0 ? (passedTests / totalTests * 100).toFixed(1) : 0;
+            const avgDuration = testResults.length > 0 ? 
+                (testResults.reduce((sum, r) => sum + r.duration, 0) / testResults.length).toFixed(0) : 0;
+            
+            const summaryDiv = document.getElementById('summary');
+            summaryDiv.innerHTML = `
+                <div class="summary-card">
+                    <div class="summary-number">${totalTests}</div>
+                    <div class="summary-label">总测试数</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number" style="color: #28a745;">${passedTests}</div>
+                    <div class="summary-label">通过测试</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number" style="color: #dc3545;">${failedTests}</div>
+                    <div class="summary-label">失败测试</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number" style="color: #007cba;">${successRate}%</div>
+                    <div class="summary-label">成功率</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-number">${avgDuration}ms</div>
+                    <div class="summary-label">平均响应时间</div>
+                </div>
+            `;
+            summaryDiv.style.display = 'block';
+        }
+        
+        // 解析腾讯财经API返回的数据
+        function parseTencentResponse(textData) {
+            const results = {};
+            
+            try {
+                // 处理可能的编码问题
+                let processedData = textData;
+                if (textData.includes('\\u') || /[\x80-\xFF]/.test(textData)) {
+                    processedData = unescape(encodeURIComponent(textData));
+                }
+                
+                // 使用正则表达式匹配每行数据
+                const lines = processedData.split('\n').filter(line => line.trim());
+                
+                lines.forEach(line => {
+                    const match = line.match(/v_s_(\w+)="(.+)";/);
+                    if (match) {
+                        const symbol = match[1];
+                        const data = match[2];
+                        const fields = data.split('~');
+                        
+                        if (fields.length >= 11) {
+                            // 处理中文名称编码
+                            let indexName = fields[1];
+                            try {
+                                if (indexName && /[\x80-\xFF]/.test(indexName)) {
+                                    indexName = decodeURIComponent(escape(indexName));
+                                }
+                            } catch (e) {
+                                console.warn('指数名称编码处理失败:', e.message);
+                            }
+                            
+                            const changePercent = parseFloat(fields[5]) || 0;
+                            let trend = 'flat';
+                            if (changePercent > 0) trend = 'up';
+                            else if (changePercent < 0) trend = 'down';
+                            
+                            const parsedData = {
+                                market_id: fields[0],
+                                name: indexName,
+                                code: fields[2],
+                                current_price: parseFloat(fields[3]) || 0,
+                                change_points: parseFloat(fields[4]) || 0,
+                                change_percent: changePercent,
+                                volume: parseInt(fields[6]) || 0,
+                                amount: parseInt(fields[7]) || 0,
+                                market_cap: parseFloat(fields[9]) || 0,
+                                trend: trend,
+                                timestamp: new Date().toISOString()
+                            };
+                            
+                            results[symbol] = parsedData;
+                        }
+                    }
+                });
+                
+                return {
+                    success: true,
+                    data: results,
+                    message: '数据解析成功',
+                    timestamp: new Date().toISOString()
+                };
+            } catch (error) {
+                return {
+                    success: false,
+                    data: {},
+                    message: `数据解析失败: ${error.message}`,
+                    timestamp: new Date().toISOString()
+                };
+            }
+        }
+        
+        // 测试直接API调用
+        async function testDirectAPI(symbol = 'sh000001') {
+            const startTime = Date.now();
+            try {
+                const url = `${TENCENT_API_BASE}s_${symbol}`;
+                console.log(`测试直接API调用: ${url}`);
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Accept': 'text/plain; charset=utf-8',
+                        'Accept-Charset': 'utf-8',
+                        'Content-Type': 'text/plain; charset=utf-8'
+                    }
+                });
+                
+                const duration = Date.now() - startTime;
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const textData = await response.text();
+                const parsedData = parseTencentResponse(textData);
+                
+                if (parsedData.success && Object.keys(parsedData.data).length > 0) {
+                    logTestResult(
+                        '直接API调用',
+                        true,
+                        `成功获取${symbol}数据`,
+                        duration,
+                        parsedData.data
+                    );
+                    return { success: true, data: parsedData.data[symbol], duration };
+                } else {
+                    throw new Error('数据解析失败或无有效数据');
+                }
+            } catch (error) {
+                const duration = Date.now() - startTime;
+                logTestResult(
+                    '直接API调用',
+                    false,
+                    `失败: ${error.message}`,
+                    duration
+                );
+                return { success: false, error: error.message, duration };
+            }
+        }
+        
+        // 测试批量API调用
+        async function testBatchAPI(symbols = ['sh000001', 'sz399001']) {
+            const startTime = Date.now();
+            try {
+                const queryString = symbols.map(s => `s_${s}`).join(',');
+                const url = `${TENCENT_API_BASE}${queryString}`;
+                console.log(`测试批量API调用: ${url}`);
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    mode: 'cors',
+                    headers: {
+                        'Accept': 'text/plain; charset=utf-8',
+                        'Accept-Charset': 'utf-8',
+                        'Content-Type': 'text/plain; charset=utf-8'
+                    }
+                });
+                
+                const duration = Date.now() - startTime;
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const textData = await response.text();
+                const parsedData = parseTencentResponse(textData);
+                
+                if (parsedData.success) {
+                    const dataCount = Object.keys(parsedData.data).length;
+                    logTestResult(
+                        '批量API调用',
+                        true,
+                        `成功获取${dataCount}个指数数据`,
+                        duration,
+                        parsedData.data
+                    );
+                    return { success: true, data: parsedData.data, duration, count: dataCount };
+                } else {
+                    throw new Error('批量数据解析失败');
+                }
+            } catch (error) {
+                const duration = Date.now() - startTime;
+                logTestResult(
+                    '批量API调用',
+                    false,
+                    `失败: ${error.message}`,
+                    duration
+                );
+                return { success: false, error: error.message, duration };
+            }
+        }
+        
+        // 测试后端代理接口
+        async function testBackendProxy(symbols = ['sh000001']) {
+            const startTime = Date.now();
+            try {
+                const symbolsParam = symbols.join(',');
+                const url = `/api/v1/market/indices?symbols=${symbolsParam}`;
+                console.log(`测试后端代理接口: ${url}`);
+                
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                const duration = Date.now() - startTime;
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const dataCount = Object.keys(data.data || {}).length;
+                    logTestResult(
+                        '后端代理接口',
+                        true,
+                        `成功获取${dataCount}个指数数据`,
+                        duration,
+                        data.data
+                    );
+                    return { success: true, data: data.data, duration, count: dataCount };
+                } else {
+                    throw new Error(data.message || '后端返回错误');
+                }
+            } catch (error) {
+                const duration = Date.now() - startTime;
+                logTestResult(
+                    '后端代理接口',
+                    false,
+                    `失败: ${error.message}`,
+                    duration
+                );
+                return { success: false, error: error.message, duration };
+            }
+        }
+        
+        // 测试数据解析功能
+        async function testDataParsing() {
+            const startTime = Date.now();
+            
+            // 模拟腾讯财经API返回的数据格式
+            const mockData = 'v_s_sh000001="1~上证指数~000001~3200.50~15.20~0.48~1234567~9876543210~0~123456789~SH";\nv_s_sz399001="1~深证成指~399001~12500.30~-25.80~-0.21~2345678~8765432109~0~234567890~SZ";';
+            
+            try {
+                const parsedData = parseTencentResponse(mockData);
+                const duration = Date.now() - startTime;
+                
+                if (parsedData.success && Object.keys(parsedData.data).length > 0) {
+                    logTestResult(
+                        '数据解析功能',
+                        true,
+                        `成功解析${Object.keys(parsedData.data).length}个指数数据`,
+                        duration,
+                        parsedData.data
+                    );
+                    return { success: true, data: parsedData.data, duration };
+                } else {
+                    throw new Error('数据解析失败');
+                }
+            } catch (error) {
+                const duration = Date.now() - startTime;
+                logTestResult(
+                    '数据解析功能',
+                    false,
+                    `失败: ${error.message}`,
+                    duration
+                );
+                return { success: false, error: error.message, duration };
+            }
+        }
+        
+        // 快速连通性测试
+        async function runQuickTest() {
+            clearResults();
+            showResults();
+            
+            totalTests = 1;
+            currentTest = 0;
+            document.getElementById('progressContainer').style.display = 'block';
+            
+            const logContainer = document.getElementById('logContainer');
+            const infoEntry = document.createElement('div');
+            infoEntry.className = 'log-entry log-info';
+            infoEntry.textContent = '🔍 开始快速连通性测试...';
+            logContainer.appendChild(infoEntry);
+            
+            const result = await testDirectAPI('sh000001');
+            
+            const statusEntry = document.createElement('div');
+            statusEntry.className = 'log-entry log-info';
+            statusEntry.textContent = result.success ? '✅ 腾讯财经API连通正常' : '❌ 腾讯财经API连通失败';
+            logContainer.appendChild(statusEntry);
+            
+            showSummary();
+        }
+        
+        // 完整测试套件
+        async function runFullTest() {
+            clearResults();
+            showResults();
+            
+            totalTests = 8; // 预估测试数量
+            currentTest = 0;
+            document.getElementById('progressContainer').style.display = 'block';
+            
+            const logContainer = document.getElementById('logContainer');
+            const startEntry = document.createElement('div');
+            startEntry.className = 'log-entry log-info';
+            startEntry.textContent = '🚀 开始完整测试套件...';
+            logContainer.appendChild(startEntry);
+            
+            const testSymbols = Object.keys(TEST_INDICES);
+            
+            // 1. 测试单个指数直接API调用
+            const singleTest = await testDirectAPI('sh000001');
+            
+            // 2. 测试批量指数直接API调用
+            const batchTest = await testBatchAPI(testSymbols);
+            
+            // 3. 测试后端代理接口
+            const proxyTest = await testBackendProxy(testSymbols);
+            
+            // 4. 测试数据解析功能
+            const parseTest = await testDataParsing();
+            
+            // 5. 性能测试
+            const performanceTests = [];
+            for (let i = 0; i < 3; i++) {
+                const perfTest = await testDirectAPI('sh000001');
+                if (perfTest.success) {
+                    performanceTests.push(perfTest.duration);
+                }
+            }
+            
+            if (performanceTests.length > 0) {
+                const avgDuration = performanceTests.reduce((a, b) => a + b, 0) / performanceTests.length;
+                const minDuration = Math.min(...performanceTests);
+                const maxDuration = Math.max(...performanceTests);
+                
+                logTestResult(
+                    '性能基准测试',
+                    avgDuration < 3000,
+                    `平均响应时间: ${avgDuration.toFixed(0)}ms`,
+                    0,
+                    { avg: avgDuration, min: minDuration, max: maxDuration }
+                );
+            }
+            
+            const completeEntry = document.createElement('div');
+            completeEntry.className = 'log-entry log-info';
+            completeEntry.textContent = '📋 测试套件执行完成';
+            logContainer.appendChild(completeEntry);
+            
+            showSummary();
+        }
+        
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 腾讯财经测试工具已加载');
+            console.log('使用方法:');
+            console.log('  - 点击"快速连通性测试"进行基本连通性检查');
+            console.log('  - 点击"完整测试套件"进行全面功能测试');
+            console.log('  - 点击单项测试按钮进行特定功能测试');
+        });
+    </script>
+</body>
+</html>

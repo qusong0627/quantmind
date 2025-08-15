@@ -1,0 +1,277 @@
+/* 策略比较模态框样式 */
+.strategy-comparison-modal .ant-modal-content {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.strategy-comparison-modal .ant-modal-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-bottom: none;
+  padding: 20px 24px;
+}
+
+.strategy-comparison-modal .ant-modal-title {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.strategy-comparison-modal .ant-modal-close {
+  color: white;
+}
+
+.strategy-comparison-modal .ant-modal-close:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 比较标签页样式 */
+.comparison-tabs {
+  margin-top: 16px;
+}
+
+.comparison-tabs .ant-tabs-nav {
+  margin-bottom: 24px;
+}
+
+.comparison-tabs .ant-tabs-tab {
+  padding: 12px 20px;
+  font-weight: 600;
+}
+
+/* 策略总览卡片样式 */
+.strategy-overview-card {
+  border-radius: 12px;
+  border: 2px solid #f0f0f0;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.strategy-overview-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+}
+
+.strategy-overview-card.best-strategy {
+  border-color: #faad14;
+  background: linear-gradient(135deg, rgba(250, 173, 20, 0.05), rgba(255, 193, 7, 0.05));
+  box-shadow: 0 4px 16px rgba(250, 173, 20, 0.2);
+}
+
+.strategy-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.model-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.model-icon {
+  font-size: 18px;
+}
+
+.model-name {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* 策略指标样式 */
+.strategy-metrics {
+  padding: 0;
+}
+
+.strategy-tags {
+  margin: 16px 0;
+}
+
+.strategy-features {
+  margin-top: 16px;
+}
+
+.strategy-features .ant-typography-h5 {
+  margin-bottom: 12px;
+  color: #495057;
+  font-size: 14px;
+}
+
+.strategy-features .ant-list {
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.strategy-features .ant-list-item {
+  padding: 4px 0;
+  border-bottom: none;
+  font-size: 13px;
+}
+
+/* 代码对比卡片样式 */
+.code-comparison-card {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+  height: 100%;
+}
+
+.code-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  font-weight: 600;
+}
+
+.code-container {
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e9ecef;
+}
+
+/* 性能分析样式 */
+.performance-card {
+  border-radius: 12px;
+  border: 1px solid #f0f0f0;
+}
+
+.performance-item {
+  padding: 16px;
+  border: 1px solid #f0f0f0;
+  border-radius: 8px;
+  background: #fafafa;
+  height: 100%;
+}
+
+.performance-header {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.model-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: white;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.performance-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-item .ant-typography {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* 策略详情样式 */
+.strategy-detail .ant-card {
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+
+.strategy-detail .ant-card-head {
+  background: #fafafa;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.strategy-detail .ant-list-item-meta-title {
+  font-weight: 600;
+  color: #495057;
+  margin-bottom: 4px;
+}
+
+.strategy-detail .ant-list-item-meta-description {
+  color: #6c757d;
+  font-size: 12px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .strategy-comparison-modal {
+    width: 95% !important;
+    max-width: none;
+  }
+  
+  .strategy-comparison-modal .ant-modal-body {
+    padding: 16px;
+  }
+  
+  .comparison-tabs .ant-tabs-content-holder {
+    padding: 0;
+  }
+  
+  .performance-item {
+    margin-bottom: 16px;
+  }
+  
+  .code-container {
+    font-size: 11px;
+  }
+}
+
+/* 动画效果 */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.strategy-overview-card,
+.code-comparison-card,
+.performance-item {
+  animation: slideInUp 0.4s ease-out;
+}
+
+.strategy-overview-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.strategy-overview-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+/* 滚动条样式 */
+.code-container pre::-webkit-scrollbar,
+.strategy-features .ant-list::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.code-container pre::-webkit-scrollbar-track,
+.strategy-features .ant-list::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.code-container pre::-webkit-scrollbar-thumb,
+.strategy-features .ant-list::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.code-container pre::-webkit-scrollbar-thumb:hover,
+.strategy-features .ant-list::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

@@ -1,0 +1,84 @@
+.main-ticker-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ticker-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.ticker-info h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.ticker-price {
+  display: flex;
+  align-items: baseline;
+  margin: 10px 0;
+}
+
+.current-price {
+  font-size: 36px;
+  font-weight: bold;
+  color: #d93026;
+  margin-right: 10px;
+}
+
+.price-change.positive {
+  font-size: 18px;
+  color: #d93026;
+}
+
+.price-change.negative {
+  font-size: 18px;
+  color: #1e8e3e;
+}
+
+.trade-time {
+  color: #888;
+  font-size: 14px;
+}
+
+.ticker-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 20px;
+  color: #555;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stat-item span:first-child {
+  margin-right: 15px;
+  color: #888;
+}
+
+.chart-actions {
+  margin-bottom: 10px;
+}
+
+.chart-actions button {
+  background: none;
+  border: 1px solid #d9d9d9;
+  padding: 5px 15px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.chart-actions button.active {
+  background-color: #1890ff;
+  color: #fff;
+  border-color: #1890ff;
+}
